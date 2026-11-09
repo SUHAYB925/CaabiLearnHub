@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#04211C">
+<meta name="description" content="Python Intermediate — Horumari xirfadaha Python Af-Soomaali: data structures, OOP, files, APIs iyo automation.">
+<title>Python Intermediate: OOP, Files, APIs & Automation - Learn in Somali | CaabiLearnHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="./CaabiLearnHub Modern Logo-Photoroom.png" type="image/png">
+<style>
+:root{--bg:#04211C;--bg2:#073029;--card:#0A3B32;--mint:#2FE0A8;--sand:#F4EBD6;--muted:#9DBBB1;--sun:#FFC857;--line:rgba(244,235,214,.12);--w:1160px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{background:var(--bg) radial-gradient(900px 520px at 88% -6%,rgba(47,224,168,.13),transparent 62%) no-repeat;color:var(--sand);font:400 1rem/1.7 Inter,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.wrap{width:min(var(--w),calc(100% - 40px));margin-inline:auto}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",sans-serif;line-height:1.08;letter-spacing:-.035em}
+button{font:inherit}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:49px;padding:0 23px;border-radius:99px;font-weight:700;font-size:.9rem;border:0;cursor:pointer;transition:.25s}
+.btn.primary{background:var(--mint);color:#02251C;box-shadow:0 8px 28px rgba(47,224,168,.2)}.btn.dark{background:#02251C;color:var(--sand)}.btn.outline{border:1px solid var(--line);color:var(--sand);background:rgba(244,235,214,.04)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+:focus-visible{outline:2px solid var(--sun);outline-offset:4px}
+#prog{position:fixed;z-index:2000;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--mint),var(--sun));transform:scaleX(0);transform-origin:left}
+header{height:76px;position:fixed;inset:0 0 auto;z-index:1000;background:rgba(4,33,28,.72);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+header.scrolled{height:66px;background:rgba(4,33,28,.95);border-color:var(--line)}
+.nav{height:100%;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font:800 1.25rem "Bricolage Grotesque";letter-spacing:-.04em}
+.brand img{width:40px;height:40px;object-fit:contain}.brand i,.footer-logo i{font-style:normal;color:var(--mint)}
+.links{display:flex;gap:27px;margin-left:auto}.links a{font-size:.88rem;color:var(--muted);transition:.2s}.links a:hover,.links a.active{color:var(--sand)}
+.nav-actions{display:flex;align-items:center;gap:18px}.login{font-size:.88rem;font-weight:600}.nav-actions .btn{min-height:42px;padding:0 18px;border-radius:13px;font-size:.83rem}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--sand)}
+/* hero */
+.hero{padding:132px 0 66px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.35;mask-image:radial-gradient(ellipse at 65% 20%,#000,transparent 72%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center}
+.crumb{font-size:.82rem;color:var(--muted);margin-bottom:24px}.crumb a:hover{color:var(--mint)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid rgba(47,224,168,.25);border-radius:99px;color:var(--mint);background:rgba(47,224,168,.07);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+h1{font-size:clamp(2.8rem,5.5vw,5.3rem);font-weight:800;margin:20px 0 18px;max-width:720px}
+h1 span{color:var(--mint)}.hero-copy{max-width:610px;color:var(--muted);font-size:1.02rem;line-height:1.85}
+.hero-meta{display:flex;flex-wrap:wrap;gap:18px;margin:25px 0;color:var(--muted);font-size:.82rem}.hero-meta span{display:flex;align-items:center;gap:7px}.hero-meta b{color:var(--sand);font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}
+.visual{position:relative;padding:12px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(145deg,rgba(47,224,168,.12),rgba(244,235,214,.025));box-shadow:0 35px 90px rgba(0,0,0,.25)}
+.course-art{aspect-ratio:1.22;border-radius:21px;overflow:hidden;position:relative;background:radial-gradient(circle at 75% 20%,rgba(47,224,168,.28),transparent 35%),linear-gradient(145deg,#0d5748,#062a24 70%)}
+.course-art:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(120deg,#000,transparent 85%)}
+.course-art .preview-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.course-art:before{display:none}
+.js-mark{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:190px;height:190px;background:#f7df1e;color:#151515;display:grid;place-items:end;padding:15px 20px;font:800 6rem/1 "Bricolage Grotesque";letter-spacing:-.1em;box-shadow:0 25px 70px rgba(0,0,0,.28);border-radius:12px}
+.art-code{position:absolute;right:24px;top:24px;color:rgba(244,235,214,.65);font:600 .85rem/1.8 monospace;text-align:right}
+.art-bottom{position:absolute;left:25px;bottom:22px;color:var(--sand);font:700 .78rem Inter;letter-spacing:.12em;text-transform:uppercase}
+.floating{position:absolute;right:-20px;bottom:28px;padding:15px 18px;border:1px solid var(--line);border-radius:17px;background:#0a382f;box-shadow:0 15px 40px rgba(0,0,0,.3)}
+.floating strong{display:block;color:var(--mint);font:800 1.35rem "Bricolage Grotesque"}.floating small{color:var(--muted);font-size:.72rem}
+/* content */
+.stats-wrap{position:relative;margin-top:-1px}.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:22px;background:rgba(244,235,214,.035);overflow:hidden}
+.stat{padding:22px 25px}.stat+.stat{border-left:1px solid var(--line)}.stat strong{display:block;font:800 1.65rem "Bricolage Grotesque";color:var(--mint)}.stat span{font-size:.78rem;color:var(--muted)}
+.section{padding:88px 0}.section-head{max-width:650px;margin-bottom:34px}.kicker{color:var(--mint);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.13em}.section h2{font-size:clamp(2rem,4vw,3.2rem);margin:10px 0 13px}.section-head p{color:var(--muted);line-height:1.8}
+.learn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.learn-item{display:flex;gap:14px;align-items:flex-start;padding:19px;border:1px solid var(--line);border-radius:17px;background:rgba(244,235,214,.025)}
+.check{width:27px;height:27px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:rgba(47,224,168,.13);color:var(--mint);font-weight:800}
+.learn-item p{color:var(--muted);font-size:.87rem}.learn-item strong{display:block;color:var(--sand);font-size:.94rem;margin-bottom:3px}
+.curriculum-layout{display:block}
+.modules{display:grid;gap:12px}
+.module{border:1px solid var(--line);border-radius:18px;background:rgba(244,235,214,.025);overflow:hidden}
+.module-toggle{width:100%;padding:20px 22px;display:flex;align-items:center;gap:15px;text-align:left;border:0;background:transparent;color:var(--sand);cursor:pointer}
+.module-number{width:38px;height:38px;border-radius:12px;background:rgba(47,224,168,.12);color:var(--mint);display:grid;place-items:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.module-title{flex:1}.module-title strong{display:block;font:700 1.05rem "Bricolage Grotesque"}.module-title small{color:var(--muted);font-size:.75rem}.chev{color:var(--mint);transition:.25s}
+.module.open .chev{transform:rotate(180deg)}
+.lessons{display:none;padding:0 22px 14px 75px}.module.open .lessons{display:block}
+.lesson{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(244,235,214,.07);color:var(--muted);font-size:.84rem}.lesson span:first-child{display:flex;align-items:center;gap:10px}.play{color:var(--mint);font-size:.7rem}.duration{font-size:.73rem;white-space:nowrap}
+.sidebar{position:sticky;top:90px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(150deg,#0b4036,#072a24);padding:23px}
+.price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}.price{font:800 2.5rem "Bricolage Grotesque";color:var(--mint)}.old-price{color:var(--muted);text-decoration:line-through;font-size:.9rem}.discount{display:inline-block;padding:4px 9px;border-radius:99px;background:rgba(255,200,87,.12);color:var(--sun);font-size:.7rem;font-weight:700;margin:7px 0 17px}
+.sidebar .btn{width:100%;margin:7px 0}.secure-note{text-align:center;color:var(--muted);font-size:.72rem;margin:8px 0 20px}
+.includes{border-top:1px solid var(--line);padding-top:18px}.includes h3{font-size:1.05rem;margin-bottom:12px}.includes li{list-style:none;color:var(--muted);font-size:.82rem;padding:7px 0;display:flex;gap:10px}.includes li span{color:var(--mint)}
+.instructor{display:grid;grid-template-columns:100px 1fr;gap:22px;align-items:center;padding:25px;border:1px solid var(--line);border-radius:22px;background:rgba(244,235,214,.025);max-width:720px}
+.avatar{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#2fe0a8,#0b5746);color:#04211c;font:800 2rem "Bricolage Grotesque"}
+.instructor h3{font-size:1.3rem;margin-bottom:4px}.instructor .role{color:var(--mint);font-size:.78rem;font-weight:600}.instructor p{color:var(--muted);font-size:.86rem;margin-top:9px}
+.bottom-cta{padding:0 0 90px}.cta-box{padding:55px 30px;text-align:center;border-radius:28px;background:var(--mint);color:#02251c;position:relative;overflow:hidden}.cta-box h2{font-size:clamp(2rem,4vw,3rem);max-width:650px;margin:0 auto 12px}.cta-box p{max-width:520px;margin:0 auto 23px;opacity:.78}.cta-box .btn{background:#02251c;color:var(--sand)}
+footer{padding:35px 0 25px;border-top:1px solid var(--line);background:#031b17}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.footer-logo{font:800 1.2rem "Bricolage Grotesque"}.footer-inner p,.footer-links{font-size:.78rem;color:var(--muted)}.footer-links{display:flex;gap:18px}.footer-links a:hover{color:var(--mint)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}.reveal.visible{opacity:1;transform:none}
+/* video preview */
+.preview-btn{position:absolute;inset:0;display:grid;place-items:center;width:100%;border:0;background:linear-gradient(to top,rgba(2,20,16,.6),transparent 55%);color:var(--sand);cursor:pointer}
+.preview-play{width:78px;height:78px;border-radius:50%;background:var(--mint);color:#02251C;display:grid;place-items:center;font-size:1.5rem;padding-left:5px;box-shadow:0 12px 40px rgba(47,224,168,.4);transition:transform .25s}
+.preview-btn:hover .preview-play{transform:scale(1.1)}
+.preview-label{position:absolute;left:18px;bottom:16px;padding:8px 14px;border-radius:99px;background:rgba(4,33,28,.82);border:1px solid var(--line);backdrop-filter:blur(10px);font-size:.78rem;font-weight:600}
+@media(max-width:600px){.preview-play{width:64px;height:64px;font-size:1.25rem}.preview-label{left:12px;bottom:12px;font-size:.72rem}}
+/* buy card (hero) */
+.hero .hero-grid{align-items:start}
+.buy-card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(150deg,#0b4036,#072a24);overflow:hidden;box-shadow:0 35px 90px rgba(0,0,0,.28)}
+.buy-card .course-art{aspect-ratio:16/9;border-radius:0}
+.pv-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+.buy-body{padding:22px}
+.buy-card .price-row{align-items:center;margin-bottom:0}
+.buy-card .discount{margin:0 0 0 auto}
+.buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 20px}
+.buy-actions .btn{min-height:46px;padding:0 12px;font-size:.85rem}
+@media(max-width:900px){.buy-card{max-width:560px}}
+/* footer */
+.clh-footer{position:relative;overflow:hidden;padding:72px 0 0;border-top:1px solid var(--line);background:linear-gradient(180deg,#031b17,#021512)}
+.clh-footer:before{content:"";position:absolute;left:50%;top:-180px;width:640px;height:320px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(47,224,168,.14),transparent);pointer-events:none}
+.clh-footer .wrap{position:relative;z-index:1}
+.footer-main{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding-bottom:52px}
+.clh-footer .footer-logo{display:inline-flex;align-items:center;gap:10px;font:800 1.3rem "Bricolage Grotesque";letter-spacing:-.04em}
+.clh-footer .footer-logo img{width:38px;height:38px;object-fit:contain}
+.footer-brand p{max-width:340px;margin:18px 0 22px;color:var(--muted);font-size:.9rem;line-height:1.8}
+.footer-tagline{display:flex;align-items:center;gap:10px;font:700 .8rem Inter;letter-spacing:.04em;color:var(--sand)}
+.footer-tagline b{color:var(--muted);font-weight:400}.footer-tagline .mint{color:var(--mint)}
+.footer-column{display:flex;flex-direction:column}
+.footer-column h4{margin-bottom:14px;font:700 .78rem Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--sand)}
+.footer-column a{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:210px;padding:9px 0;border-bottom:1px solid rgba(244,235,214,.07);color:var(--muted);font-size:.88rem;transition:color .2s,padding .2s}
+.footer-column a span{color:var(--mint);opacity:0;transform:translate(-4px,4px);transition:.25s}
+.footer-column a:hover{color:var(--sand);padding-left:6px}
+.footer-column a:hover span{opacity:1;transform:none}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.footer-bottom strong{color:var(--sand);font-weight:600}
+.footer-social{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.follow-text{margin-right:6px;font-size:.78rem}
+.footer-social a{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--sand);background:rgba(244,235,214,.04);transition:.25s}
+.footer-social a:hover{background:var(--mint);color:#02251C;border-color:var(--mint);transform:translateY(-3px)}
+.footer-social .whatsapp-link{width:auto;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border-radius:99px;font-size:.8rem;font-weight:600}
+.footer-social .whatsapp-link:hover{background:#25D366;border-color:#25D366}
+.to-top{width:40px;height:40px;border-radius:50%;border:1px solid rgba(47,224,168,.35);background:rgba(47,224,168,.1);color:var(--mint);font-size:1.05rem;cursor:pointer;transition:.25s}
+.to-top:hover{background:var(--mint);color:#02251C;transform:translateY(-3px)}
+.footer-mark{text-align:center;font:800 clamp(3.2rem,13vw,10.5rem)/.85 "Bricolage Grotesque";letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(244,235,214,.12);white-space:nowrap;overflow:hidden;user-select:none;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent 95%);mask-image:linear-gradient(to bottom,#000 25%,transparent 95%)}
+@media(hover:none){.footer-column a span{opacity:.6;transform:none}}
+@media(max-width:900px){.footer-main{grid-template-columns:1fr 1fr;gap:36px}.footer-brand{grid-column:1/-1}}
+@media(max-width:600px){.clh-footer{padding:54px 0 70px}.footer-main{gap:28px 20px}.footer-column a{max-width:none}.footer-bottom{flex-direction:column;align-items:flex-start}}
+/* WhatsApp floating button */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:1500;display:flex;align-items:center;gap:10px;height:56px;padding:0 22px 0 16px;border-radius:99px;background:#25D366;color:#04211C;font-weight:700;font-size:.9rem;box-shadow:0 12px 32px rgba(37,211,102,.35);transition:.25s}
+.wa-float:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(37,211,102,.45)}
+.wa-float svg{width:28px;height:28px;fill:currentColor;flex-shrink:0}
+.wa-float::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid #25D366;animation:waPulse 2.2s infinite;pointer-events:none}
+@keyframes waPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.35);opacity:0}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:35px}.visual{max-width:650px}.curriculum-layout{grid-template-columns:1fr}.sidebar{position:static;max-width:520px}.links{display:none;position:fixed;top:66px;left:0;right:0;padding:18px 22px;background:#04211c;flex-direction:column;gap:16px;border-bottom:1px solid var(--line)}.links.open{display:flex}.burger{display:block;margin-left:10px}.nav-actions{margin-left:auto}.nav-actions .login{display:none}}
+@media(max-width:600px){.wrap{width:min(var(--w),calc(100% - 30px))}.hero{padding-top:112px}.hero-meta{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3){border-left:0;border-top:1px solid var(--line)}.stat:nth-child(4){border-top:1px solid var(--line)}.learn-grid{grid-template-columns:1fr}.section{padding:65px 0}.js-mark{width:145px;height:145px;font-size:4.7rem}.floating{right:-7px;bottom:15px}.instructor{grid-template-columns:70px 1fr;padding:18px}.avatar{width:70px;height:70px;font-size:1.5rem}.nav-actions .btn{padding:0 12px;font-size:.76rem}.brand{font-size:1.05rem}.brand img{width:34px;height:34px}.module-toggle{padding:16px}.lessons{padding-left:22px}
+.wa-float{right:16px;bottom:16px;width:56px;padding:0;justify-content:center}.wa-float span{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}.wa-float::after{animation:none;display:none}}
+
+/* navbar (same design as the home page) */
+header{background:rgba(4,33,28,.55)}
+header.scrolled{height:66px;background:rgba(4,33,28,.92);border-bottom-color:var(--line)}
+.links a{position:relative;padding:4px 0;font-weight:500}
+.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:100%;background:var(--mint);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover,.links a.active{color:var(--sand)}
+.links a:hover::after,.links a.active::after{transform:scaleX(1)}
+.nav-actions{gap:14px}
+.nav-actions .btn{min-height:42px;padding:0 18px;border-radius:14px;font-size:.84rem;font-weight:600}
+.burger{cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;transition:.25s}
+.burger.x span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.x span:nth-child(2){opacity:0}
+.burger.x span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:900px){
+ .burger{display:block;order:3;margin-left:0}
+ .nav-actions{margin-left:auto}.nav-actions .login{display:none}
+ .links{display:none;position:fixed;top:66px;left:0;right:0;flex-direction:column;gap:0;padding:14px 20px 24px;background:rgba(4,33,28,.98);border-bottom:1px solid var(--line);margin:0}
+ .links.open{display:flex}
+ .links a{padding:14px 0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:600px){.nav-actions .btn{padding:0 12px;font-size:.76rem}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<header id="header">
+ <div class="wrap nav">
+  <a class="brand" href="HOME PAGE.HTML" aria-label="CaabiLearnHub Home"><img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+  <nav class="links" id="links" aria-label="Main navigation"><a href="HOME PAGE.HTML">Home</a><a class="active" href="Course.html">Courses</a><a href="About.html">About Us</a><a href="Contact.html">Contact</a></nav>
+  <div class="nav-actions"><a class="login" href="LOGIN.HTML">Login</a><a class="btn primary" href="SIGN UP.HTML">Get Started ↗</a></div>
+  <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+ </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div>
+   <div class="crumb"><a href="HOME PAGE.HTML">Home</a> / <a href="Course.html">Courses</a> / Python</div>
+   <span class="eyebrow"><i class="dot"></i> Programming · Python</span>
+   <h1>Python <span>Intermediate</span></h1>
+   <p class="hero-copy">Horumari xirfadaha Python-ka laga bilaabo heerka dhexe ilaa aad ku dhisi karto software iyo automation scripts dhab ah. Faham data structures, OOP, files, APIs iyo problem solving adigoo tallaabo-tallaabo u baranaya.</p>
+   <div class="hero-meta">
+    <span>◷ <b>16h 42m</b></span><span>▤ <b>69 cashar</b></span><span>◉ <b>Intermediate</b></span><span>◎ <b>Af-Soomaali</b></span>
+   </div>
+   <div class="hero-actions"><a class="btn primary" href="SIGN UP.HTML">Buy Course ↗</a><a class="btn outline" href="#curriculum">View Curriculum ↓</a></div>
+  </div>
+  <aside class="buy-card">
+   <div class="course-art">
+    <img class="preview-thumb" id="pvThumb" alt="" style="display:none">
+    <button class="preview-btn" type="button" data-preview aria-label="Daawo preview-ga koorsada">
+     <span class="preview-play">▶</span>
+     <span class="preview-label">Daawo preview-ga koorsada</span>
+    </button>
+   </div>
+   <div class="buy-body">
+    <div class="price-row"><span class="price">$15</span><span class="old-price">$20</span><span class="discount">Save 25%</span></div>
+    <div class="buy-actions"><a class="btn primary" href="BUY COURSE WITH PHY.HTML">Buy Course↗</a><a class="btn outline" href="Contact.html">Contact us</a></div>
+    <div class="includes"><h3>Koorsadu waxay ka kooban tahay</h3><ul>
+     <li><span>✓</span> 69 cashar</li><li><span>✓</span> 16h 42m oo waxbarasho</li><li><span>✓</span> Sharaxaad Af-Soomaali ah</li><li><span>✓</span> Heerka dhexe (Intermediate)</li><li><span>✓</span> Practical coding topics</li>
+    </ul></div>
+   </div>
+  </aside>
+ </div>
+</section>
+
+<div class="wrap stats-wrap">
+ <div class="stats">
+  <div class="stat"><strong>69</strong><span>Cashar oo dhammeystiran</span></div>
+  <div class="stat"><strong>16.7h</strong><span>Waqtiga koorsada</span></div>
+  <div class="stat"><strong>$15</strong><span>Qiimaha koorsada</span></div>
+  <div class="stat"><strong>100%</strong><span>Af-Soomaali</span></div>
+ </div>
+</div>
+
+<section class="section" id="learn">
+ <div class="wrap">
+  <div class="section-head reveal"><span class="kicker">Waxaad baran doontaa</span><h2>Skills aad ku dhisi karto projects dhab ah.</h2><p>Koorsadani waxay ku siinaysaa faham iyo xirfado Python ah oo aad ugu baahan tahay horumarinta software iyo automation casri ah.</p></div>
+  <div class="learn-grid">
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>Python Refresher</strong>Variables, data types, conditions iyo loops.</p></div>
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>Data Structures</strong>Lists, dictionaries, sets iyo comprehensions.</p></div>
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>Object-Oriented Programming</strong>Classes, inheritance iyo polymorphism.</p></div>
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>Files & Error Handling</strong>Akhrinta iyo qorista files, iyo maaraynta khaladaadka.</p></div>
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>Modules & Packages</strong>pip, virtual environments iyo habaynta project-ka.</p></div>
+   <div class="learn-item reveal"><span class="check">✓</span><p><strong>APIs & Automation</strong>La shaqaynta APIs, JSON iyo scripts automation ah.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="curriculum" style="padding-top:20px">
+ <div class="wrap">
+  <div class="section-head reveal"><span class="kicker">Course curriculum</span><h2>Barashadaada, tallaabo tallaabo.</h2><p>Qaybaha hoose waa qaab-dhismeedka koorsada. Guji qayb kasta si aad u aragto mawduucyada ku jira.</p></div>
+  <div class="curriculum-layout">
+   <div class="modules">
+    <article class="module open"><button class="module-toggle" aria-expanded="true"><span class="module-number">01</span><span class="module-title"><strong>Python Refresher</strong><small>Dib u eeg aasaaska</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> Variables iyo Data Types</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Conditions iyo Loops</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Functions iyo Scope</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Input, Output iyo Formatting</span><span class="duration">Cashar</span></div>
+    </div></article>
+    <article class="module"><button class="module-toggle" aria-expanded="false"><span class="module-number">02</span><span class="module-title"><strong>Data Structures</strong><small>Habaynta xogta</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> Lists iyo Tuples</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Dictionaries iyo Sets</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> List Comprehensions</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Sorting iyo Searching</span><span class="duration">Cashar</span></div>
+    </div></article>
+    <article class="module"><button class="module-toggle" aria-expanded="false"><span class="module-number">03</span><span class="module-title"><strong>Object-Oriented Programming</strong><small>Classes iyo Objects</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> Classes iyo Objects</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Inheritance iyo Polymorphism</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Encapsulation iyo Magic Methods</span><span class="duration">Cashar</span></div>
+    </div></article>
+    <article class="module"><button class="module-toggle" aria-expanded="false"><span class="module-number">04</span><span class="module-title"><strong>Files, Errors & Modules</strong><small>Faylasha iyo khaladaadka</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> Akhrinta iyo qorista Files</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> try, except iyo Exceptions</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Modules, Packages iyo pip</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Virtual Environments</span><span class="duration">Cashar</span></div>
+    </div></article>
+    <article class="module"><button class="module-toggle" aria-expanded="false"><span class="module-number">05</span><span class="module-title"><strong>APIs & Automation</strong><small>Xogta internetka iyo scripts</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> requests iyo APIs</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> JSON iyo Data Handling</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Automation Scripts</span><span class="duration">Cashar</span></div>
+    </div></article>
+    <article class="module"><button class="module-toggle" aria-expanded="false"><span class="module-number">06</span><span class="module-title"><strong>Practical Projects & Best Practices</strong><small>Ku dabaq xirfadahaaga projects</small></span><span class="chev">+</span></button><div class="lessons">
+     <div class="lesson"><span><i class="play">▶</i> Project: Command-Line App</span><span class="duration">Project</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Debugging iyo Clean Code (PEP 8)</span><span class="duration">Cashar</span></div>
+     <div class="lesson"><span><i class="play">▶</i> Soo koobid iyo tallaabada xigta</span><span class="duration">Cashar</span></div>
+    </div></article>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section instructor-section" id="instructor">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">MEET YOUR INSTRUCTOR</span>
+      <h2>Wax ka baro <span>macallinka.</span></h2>
+      <p>Barashada aqoon dhab ah waxay ka bilaabataa macallin khibrad leh.</p>
+    </div>
+    <div class="instructor-card reveal">
+      <div class="instructor-image">
+        <img src="./Images/IMAGES FULL.png" alt="Suhayb Mohamed - Founder of CaabiLearnHub">
+        <div class="image-overlay"></div>
+        <span class="instructor-badge"><span class="status-dot"></span>Founder & Instructor</span>
+      </div>
+      <div class="instructor-content">
+        <span class="instructor-label">THE PERSON BEHIND CAABILEARNHUB</span>
+        <h3>Suhayb Mohamed</h3>
+        <div class="instructor-role">Founder & Instructor <span>·</span> CaabiLearnHub</div>
+        <p>Waxaan ahay Software Engineer xiiseeya Web Development iyo Artificial Intelligence. Waxaan aaminsanahay in qof walba uu awood u leeyahay inuu barto programming, haddii loo helo hab waxbarasho oo fudud oo la fahmi karo.</p>
+        <p>Ujeeddadaydu waa inaan ardayda Soomaaliyeed ku hago barashada programming iyo AI Af-Soomaali, anigoo ka caawinaya inay dhisaan projects dhab ah iyo xirfado ay mustaqbalkooda ku horumariyaan.</p>
+        <div class="instructor-skills"><span>Web Development</span><span>Artificial Intelligence</span><span>Software Engineering</span></div>
+        <div class="instructor-footer">
+          <div class="instructor-signature"><span>Learn. Build. Innovate.</span></div>
+          <div class="instructor-social">
+            <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn">in</a>
+            <a href="https://github.com/" target="_blank" aria-label="GitHub">GH</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.instructor-section{padding:90px 0}
+.instructor-section .section-head{margin-bottom:38px}
+.instructor-section .section-head h2 span{color:var(--mint,#2FE0A8)}
+.instructor-section .section-head p{color:#929e9a;margin-top:12px}
+.instructor-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;overflow:hidden;background:#082a23;border:1px solid rgba(255,255,255,.09);border-radius:24px;box-shadow:0 25px 70px rgba(0,0,0,.18);transition:transform .35s ease,border-color .35s ease}
+.instructor-card:hover{transform:translateY(-5px);border-color:rgba(47,224,168,.35)}
+.instructor-image{position:relative;min-height:430px;overflow:hidden;background:#102d27}
+.instructor-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center 25%;filter:grayscale(100%);transition:transform .7s ease,filter .5s ease}
+.instructor-card:hover .instructor-image img{transform:scale(1.05);filter:grayscale(20%)}
+.image-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,25,20,.8),transparent 55%);pointer-events:none}
+.instructor-badge{position:absolute;bottom:22px;left:22px;display:flex;align-items:center;gap:9px;padding:10px 15px;border-radius:50px;background:rgba(4,33,28,.85);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:12px;font-weight:600;backdrop-filter:blur(12px)}
+.status-dot{width:8px;height:8px;background:#2fe0a8;border-radius:50%;box-shadow:0 0 12px #2fe0a8}
+.instructor-content{padding:48px 42px;display:flex;flex-direction:column;justify-content:center}
+.instructor-label{color:var(--mint,#2FE0A8);font-size:10px;letter-spacing:2px;font-weight:800}
+.instructor-content h3{color:#fff;font-size:clamp(28px,4vw,39px);font-weight:800;letter-spacing:-1.5px;margin:13px 0 8px}
+.instructor-role{color:#9eaaa5;font-size:13px;margin-bottom:25px}
+.instructor-role span{color:var(--mint,#2FE0A8);padding:0 4px}
+.instructor-content p{color:#b5c1bc;font-size:14px;line-height:1.9;margin-bottom:15px}
+.instructor-skills{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.instructor-skills span{color:#a9e9d1;background:rgba(47,224,168,.08);border:1px solid rgba(47,224,168,.17);padding:9px 12px;border-radius:7px;font-size:11px;font-weight:600}
+.instructor-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.09)}
+.instructor-signature span{color:var(--mint,#2FE0A8);font-size:13px;font-weight:800;letter-spacing:.5px}
+.instructor-social{display:flex;gap:9px}
+.instructor-social a{width:36px;height:36px;display:grid;place-items:center;color:#d8e5df;text-decoration:none;border:1px solid rgba(255,255,255,.13);border-radius:9px;font-size:12px;font-weight:700;transition:.3s ease}
+.instructor-social a:hover{background:var(--mint,#2FE0A8);color:#04211c;border-color:var(--mint,#2FE0A8)}
+@media(max-width:768px){.instructor-section{padding:65px 0}.instructor-card{grid-template-columns:1fr;border-radius:18px}.instructor-image{min-height:340px}.instructor-content{padding:30px 23px}.instructor-content h3{font-size:30px}}
+@media(max-width:420px){.instructor-image{min-height:290px}.instructor-content{padding:25px 18px}}
+</style>
+
+<section class="bottom-cta"><div class="wrap"><div class="cta-box reveal"><h2>Diyaar ma u tahay inaad Python barato?</h2><p>Bilow safarkaaga programming-ka, dhis xirfado cusub, kuna tallaabsado heerka xiga ee Web Development.</p><a class="btn" href="SIGN UP.HTML">Join CaabiLearnHub ↗</a></div></div></section>
+</main>
+<footer class="clh-footer">
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="HOME PAGE.HTML" class="footer-logo" aria-label="CaabiLearnHub Home">
+          <img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'">
+          <span>Caabi<i>LearnHub</i></span>
+        </a>
+        <p>Goob waxbarasho oo diiradda saarta Programming iyo Artificial Intelligence, kuna baraysa Af-Soomaali.</p>
+        <div class="footer-tagline"><span>Learn</span><b>•</b><span>Build</span><b>•</b><span class="mint">Grow</span></div>
+      </div>
+      <nav class="footer-column" aria-label="Explore">
+        <h4>Explore</h4>
+        <a href="HOME PAGE.HTML">Home <span>↗</span></a>
+        <a href="Course.html">Courses <span>↗</span></a>
+        <a href="About.html">About Us <span>↗</span></a>
+        <a href="HOME PAGE.HTML#video-showcase">Platform Tour <span>↗</span></a>
+      </nav>
+      <nav class="footer-column" aria-label="Learning">
+        <h4>Learning</h4>
+        <a href="Course.html">All Courses <span>↗</span></a>
+        <a href="Course.html">Programming <span>↗</span></a>
+        <a href="Course.html">Artificial Intelligence <span>↗</span></a>
+      </nav>
+      <nav class="footer-column" aria-label="Account">
+        <h4>Account</h4>
+        <a href="LOGIN.HTML">Login <span>↗</span></a>
+        <a href="SIGN UP.HTML">Create Account <span>↗</span></a>
+        <a href="mailto:hello@caabilearnhub.com">Email Us <span>↗</span></a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="yr">2026</span> <strong>CaabiLearnHub.</strong> All rights reserved.</p>
+      <div class="footer-social">
+        <span class="follow-text">Follow us</span>
+        <a href="https://www.youtube.com/@caabilearnhub" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.900.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.800a3 3 0 0 0 2.100 2.100c1.900.5 8.900.5 8.900.5s7 0 8.900-.5a3 3 0 0 0 2.100-2.100c.4-1.600.5-3.200.5-4.800s-.1-3.200-.5-4.800zM9.800 15.200V8.800l5.800 3.200-5.800 3.200z"/></svg>
+        </a>
+        <a href="https://x.com/SuhaibMohav8aw" target="_blank" rel="noopener noreferrer" aria-label="X" title="X / Twitter">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.200 2.300h3.300l-7.200 8.300 8.500 11.200h-6.700l-5.200-6.800-6 6.800H1.600l7.700-8.800L1.200 2.300H8l4.700 6.200 5.500-6.200zm-1.200 17.500h1.800L7.100 4.200H5.200L17 19.800z"/></svg>
+        </a>
+        <a href="https://wa.me/252907071342" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp" class="whatsapp-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.500 15.200L2 22l4.900-1.500A10 10 0 1 0 12 2zm5.800 14.200c-.2.700-1.400 1.300-2 1.400-.5.100-1.200.100-1.900-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.100 1-2.400c.3-.3.600-.4.800-.4h.6c.2 0 .4 0 .6.500l.8 2c.1.2.1.400 0 .5l-.3.500-.4.400c-.1.200-.3.300-.1.600.2.300.7 1.200 1.500 1.900 1 .9 1.900 1.200 2.200 1.300.3.100.4.100.6-.1l.8-1c.2-.3.400-.2.600-.1l1.900.9c.3.100.5.200.5.300.1.200.1.800-.1 1.400z"/></svg>
+          WhatsApp
+        </a>
+        <button type="button" class="to-top" id="toTop" aria-label="Ku laabo dhanka sare" title="Top">↑</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-mark" aria-hidden="true">CaabiLearnHub</div>
+</footer>
+
+<!-- WhatsApp floating button -->
+<a class="wa-float" href="https://wa.me/252907071342?text=Salaan%2C%20waxaan%20jeclaan%20lahaa%20macluumaad%20ku%20saabsan%20koorsada%20Python%20Intermediate." target="_blank" rel="noopener" aria-label="La hadal WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>La hadal WhatsApp</span>
+</a>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const header=$("#header"),progress=$("#prog");
+function onScroll(){header.classList.toggle("scrolled",scrollY>20);const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${max>0?scrollY/max:0})`}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+const burger=$("#burger"),links=$("#links");
+function menu(o){links.classList.toggle("open",o);burger.classList.toggle("x",o);document.body.classList.toggle("lock",o);burger.setAttribute("aria-expanded",String(o));burger.setAttribute("aria-label",o?"Close navigation menu":"Open navigation menu")}
+burger.addEventListener("click",()=>menu(!links.classList.contains("open")));
+$$(".links a").forEach(a=>a.addEventListener("click",()=>menu(false)));
+addEventListener("keydown",e=>{if(e.key==="Escape")menu(false)});
+$$(".module-toggle").forEach(btn=>btn.addEventListener("click",()=>{const module=btn.closest(".module");const open=module.classList.toggle("open");btn.setAttribute("aria-expanded",String(open))}));
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});
+$$(".reveal").forEach(el=>observer.observe(el));
+/* YOUTUBE PREVIEW: halkan ku dhaji YouTube link-gaaga (watch, youtu.be, shorts ama embed dhammaantood way shaqeeyaan) */
+const PREVIEW_URL="https://youtu.be/wqLhBgZd7XU?si=KmTcJgQ5kTBXFcFW";
+const ytId=(u=>{const m=u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})(?:[?&#\/]|$)/);return m?m[1]:""})(PREVIEW_URL);
+const pvThumb=$("#pvThumb");
+if(ytId){pvThumb.style.display="";pvThumb.onerror=()=>{pvThumb.onerror=()=>{pvThumb.style.display="none"};pvThumb.src=`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`};pvThumb.src=`https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`}
+function playPreview(btn){if(!ytId){alert("Ku dar YouTube link-gaaga PREVIEW_URL (ku dhex jira JavaScript-ka file-ka).");return}const box=btn.closest(".course-art"),f=document.createElement("iframe");f.className="pv-iframe";f.title="Course preview";f.src=`https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";box.appendChild(f);btn.remove()}
+$$("[data-preview]").forEach(b=>b.addEventListener("click",()=>playPreview(b)));
+const yr=$("#yr");if(yr)yr.textContent=new Date().getFullYear();
+$("#toTop").addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+</script>
+</body>
+</html>

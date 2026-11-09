@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="so">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#04211C">
+  <meta name="description" content="Frontend Pro Program — HTML, CSS, JavaScript, React iyo MongoDB Af-Soomaali, oo isku habaysan.">
+  <title>Frontend Pro Program — CaabiLearnHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="./CaabiLearnHub Modern Logo-Photoroom.png" type="image/png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #04211C;
+      --bg2: #073029;
+      --card: #0A3B32;
+      --mint: #2FE0A8;
+      --sand: #F4EBD6;
+      --muted: #9DBBB1;
+      --sun: #FFC857;
+      --line: rgba(244, 235, 214, .13);
+      --r: 20px;
+      --w: 1140px
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px }
+    body { background: var(--bg); color: var(--sand); font: 400 1rem/1.7 Inter, sans-serif; overflow-x: hidden }
+    body.lock { overflow: hidden }
+    a { color: inherit; text-decoration: none }
+    img { display: block; max-width: 100% }
+    .wrap { width: min(var(--w), calc(100% - 40px)); margin-inline: auto }
+    h1, h2, h3 { font-family: "Bricolage Grotesque", sans-serif; line-height: 1.05; letter-spacing: -.035em }
+    .mint { color: var(--mint) }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px;
+      border-radius: 14px; font-weight: 600; font-size: .92rem; border: 1px solid transparent;
+      cursor: pointer; transition: transform .25s, box-shadow .25s, background .25s
+    }
+    .btn.p { background: var(--mint); color: #02251C; box-shadow: 0 10px 30px rgba(47, 224, 168, .25) }
+    .btn.p:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(47, 224, 168, .4) }
+    .btn.o { border-color: var(--line); color: var(--sand) }
+    .btn.o:hover { border-color: var(--mint); color: var(--mint) }
+    :focus-visible { outline: 2px solid var(--sun); outline-offset: 3px }
+
+    #prog {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%;
+      transform: scaleX(0); background: linear-gradient(90deg, var(--mint), var(--sun)); z-index: 2000
+    }
+
+    header {
+      position: fixed; inset: 0 0 auto; height: 76px; z-index: 1000; transition: .3s;
+      backdrop-filter: blur(16px); background: rgba(4, 33, 28, .55)
+    }
+    header.s { height: 66px; background: rgba(4, 33, 28, .92); border-bottom: 1px solid var(--line) }
+    .nav { height: 100%; display: flex; align-items: center; gap: 28px }
+    .brand { display: flex; align-items: center; gap: 10px; font: 800 1.25rem "Bricolage Grotesque", sans-serif; letter-spacing: -.04em }
+    .brand img { width: 40px; height: 40px; object-fit: contain }
+    .brand i { font-style: normal; color: var(--mint) }
+    .links { display: flex; gap: 28px; margin-left: auto }
+    .links a { font-size: .88rem; font-weight: 500; color: var(--muted); position: relative; padding: 4px 0; transition: color .2s }
+    .links a::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%;
+      background: var(--mint); transform: scaleX(0); transform-origin: left; transition: transform .3s
+    }
+    .links a:hover, .links a.on { color: var(--sand) }
+    .links a:hover::after, .links a.on::after { transform: scaleX(1) }
+    .acts { display: flex; align-items: center; gap: 14px }
+    .acts .login { font-size: .88rem; font-weight: 600 }
+    .acts .btn { min-height: 42px; padding: 0 18px; font-size: .84rem }
+    .burger {
+      display: none; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--bg2); color: var(--sand); cursor: pointer
+    }
+    .burger span { display: block; width: 18px; height: 2px; background: currentColor; margin: 4px auto; transition: .25s }
+    .burger.x span:nth-child(1) { transform: translateY(6px) rotate(45deg) }
+    .burger.x span:nth-child(2) { opacity: 0 }
+    .burger.x span:nth-child(3) { transform: translateY(-6px) rotate(-45deg) }
+
+    /* ===== PAGE HEAD ===== */
+    .ph { padding: 150px 0 70px; position: relative; overflow: hidden }
+    .ph::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px; mask-image: radial-gradient(ellipse at 70% 0, #000, transparent 70%); opacity: .5
+    }
+    .ph .wrap { position: relative }
+    .crumb { color: var(--muted); font-size: .84rem }
+    .crumb a:hover { color: var(--mint) }
+    .ph h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; margin: 14px 0; max-width: 820px; animation: fade .9s both }
+    .ph p { color: var(--muted); max-width: 600px; animation: fade .9s .15s both }
+    @keyframes fade { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 80px 0 }
+    .sh { margin-bottom: 40px; max-width: 620px }
+    .sh h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; margin-bottom: 12px }
+    .sh p { color: var(--muted) }
+
+    /* story */
+    .story { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center }
+    .story h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; margin-bottom: 18px }
+    .story p { color: var(--muted); margin-bottom: 14px }
+    .story p b { color: var(--sand); font-weight: 600 }
+    .panel {
+      background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 34px;
+      position: relative; overflow: hidden
+    }
+    .panel::after {
+      content: ""; position: absolute; width: 220px; height: 220px; right: -80px; top: -80px;
+      border-radius: 50%; background: rgba(47, 224, 168, .14); filter: blur(50px)
+    }
+    .panel blockquote {
+      font: 700 clamp(1.3rem, 2.4vw, 1.75rem)/1.25 "Bricolage Grotesque", sans-serif;
+      letter-spacing: -.03em; position: relative
+    }
+    .panel small { display: block; margin-top: 18px; color: var(--muted); font-size: .85rem; position: relative }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px }
+    .stat { padding: 26px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg2) }
+    .stat b { display: block; font: 800 2.4rem "Bricolage Grotesque", sans-serif; color: var(--mint); letter-spacing: -.04em; line-height: 1 }
+    .stat span { display: block; margin-top: 10px; color: var(--muted); font-size: .88rem }
+
+    /* values */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 28px;
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1), border-color .3s
+    }
+    .card:hover { border-color: rgba(47, 224, 168, .5); transform: translateY(-6px) }
+    .ic {
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+      background: rgba(47, 224, 168, .13); color: var(--mint); margin-bottom: 18px
+    }
+    .card h3 { font-size: 1.3rem; margin-bottom: 8px }
+    .card p { color: var(--muted); font-size: .9rem }
+
+    /* steps */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: s }
+    .step { padding: 28px; border-radius: var(--r); background: var(--bg2); border: 1px solid var(--line); position: relative }
+    .step::before {
+      counter-increment: s; content: "0" counter(s); font: 800 .9rem "Bricolage Grotesque", sans-serif;
+      color: #02251C; background: var(--mint); width: 38px; height: 38px; border-radius: 50%;
+      display: grid; place-items: center; margin-bottom: 18px
+    }
+    .step:nth-child(3)::before { background: var(--sun) }
+    .step h3 { font-size: 1.3rem; margin-bottom: 8px }
+    .step p { color: var(--muted); font-size: .9rem }
+
+    /* contact */
+    .contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px }
+    .contact a.card { display: block }
+    .contact a.card span { color: var(--mint); font-weight: 600; font-size: .9rem; word-break: break-word }
+
+    /* cta */
+    .cta { padding: 0 0 100px }
+    .ctab {
+      padding: 60px 30px; border-radius: 28px; text-align: center; background: var(--mint);
+      color: #02251C; position: relative; overflow: hidden
+    }
+    .ctab::before {
+      content: ""; position: absolute; width: 300px; height: 300px; left: -100px; top: -120px;
+      border-radius: 50%; border: 2px solid rgba(2, 37, 28, .12); animation: spin 18s linear infinite
+    }
+    @keyframes spin { to { transform: rotate(360deg) } }
+    .ctab h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; max-width: 680px; margin: 0 auto 12px; position: relative }
+    .ctab p { max-width: 480px; margin: 0 auto 24px; position: relative; opacity: .8 }
+    .ctab .btn { background: #02251C; color: var(--sand); position: relative }
+
+
+    /* founder */
+    .founder { display: grid; grid-template-columns: 380px 1fr; gap: 56px; align-items: center }
+    .fphoto {
+      position: relative; aspect-ratio: 4/5; border-radius: 28px; overflow: hidden;
+      background: linear-gradient(135deg, #0E5445, #073029); border: 1px solid var(--line)
+    }
+    .fphoto::after {
+      content: ""; position: absolute; inset: 0; border-radius: 28px; pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(47, 224, 168, .25)
+    }
+    .fphoto img { width: 100%; height: 100%; object-fit: cover; object-position: center top }
+    .fphoto .fb {
+      position: absolute; inset: 0; display: none; place-items: center;
+      font: 800 5rem "Bricolage Grotesque", sans-serif; color: rgba(47, 224, 168, .4)
+    }
+    .fphoto.noimg .fb { display: grid }
+    .ftag {
+      position: absolute; left: 16px; bottom: 16px; padding: 7px 14px; border-radius: 99px;
+      background: rgba(4, 33, 28, .85); backdrop-filter: blur(8px); font-size: .78rem; font-weight: 600; color: var(--mint); z-index: 1
+    }
+    .fbody h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; margin-bottom: 6px }
+    .frole { color: var(--mint); font-weight: 600; margin-bottom: 18px }
+    .fbody p { color: var(--muted); margin-bottom: 14px; max-width: 560px }
+    .fsoc { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap }
+    @media(max-width:900px) { .founder { grid-template-columns: 1fr; gap: 32px } .fphoto { max-width: 340px } }
+
+
+    /* contact page */
+    .cwrap { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start }
+    .form {
+      background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 34px;
+      display: grid; gap: 18px
+    }
+    .form h2 { font-size: 1.8rem; font-weight: 800 }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+    .fld { display: grid; gap: 8px }
+    .fld label { font-size: .85rem; font-weight: 600; color: var(--sand) }
+    .fld input, .fld select, .fld textarea {
+      width: 100%; padding: 0 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg2);
+      color: var(--sand); font: 500 .95rem Inter, sans-serif; transition: border-color .25s, box-shadow .25s
+    }
+    .fld input, .fld select { height: 52px }
+    .fld textarea { padding: 14px 16px; min-height: 140px; resize: vertical; line-height: 1.6 }
+    .fld input::placeholder, .fld textarea::placeholder { color: var(--muted) }
+    .fld input:focus, .fld select:focus, .fld textarea:focus {
+      outline: none; border-color: var(--mint); box-shadow: 0 0 0 4px rgba(47, 224, 168, .12)
+    }
+    .fld select option { background: var(--bg2) }
+    .fbtns { display: flex; gap: 12px; flex-wrap: wrap }
+    .fnote { color: var(--muted); font-size: .8rem }
+    .fstat { min-height: 1.2em; font-size: .85rem; color: var(--mint) }
+    .side { display: grid; gap: 18px }
+    .side a.card { display: flex; gap: 16px; align-items: flex-start }
+    .side a.card .ic { margin: 0; flex: none }
+    .side a.card h3 { font-size: 1.1rem; margin-bottom: 2px }
+    .side a.card span { color: var(--mint); font-weight: 600; font-size: .88rem; word-break: break-word }
+    .side a.card p { margin-bottom: 4px }
+    .faq { display: grid; gap: 12px; max-width: 820px }
+    .faq details { background: var(--bg2); border: 1px solid var(--line); border-radius: 16px; transition: border-color .25s }
+    .faq details[open] { border-color: rgba(47, 224, 168, .5) }
+    .faq summary {
+      list-style: none; cursor: pointer; padding: 18px 22px; font: 700 1.05rem "Bricolage Grotesque", sans-serif;
+      letter-spacing: -.02em; display: flex; justify-content: space-between; gap: 16px; align-items: center
+    }
+    .faq summary::-webkit-details-marker { display: none }
+    .faq summary::after { content: "+"; color: var(--mint); font-size: 1.4rem; transition: transform .25s }
+    .faq details[open] summary::after { transform: rotate(45deg) }
+    .faq details p { padding: 0 22px 20px; color: var(--muted); font-size: .92rem }
+    @media(max-width:900px) { .cwrap { grid-template-columns: 1fr } }
+    @media(max-width:560px) { .row { grid-template-columns: 1fr } .form { padding: 24px } }
+
+
+    /* program page */
+    .hstats { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; animation: fade .9s .3s both }
+    .hstats div { padding: 14px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg2) }
+    .hstats b { display: block; font: 800 1.7rem "Bricolage Grotesque", sans-serif; color: var(--mint); letter-spacing: -.04em; line-height: 1.1 }
+    .hstats span { color: var(--muted); font-size: .82rem }
+    .phases { display: grid; gap: 14px; counter-reset: ph }
+    .phase {
+      display: grid; grid-template-columns: 220px 1fr auto; gap: 24px; align-items: center; padding: 14px 26px 14px 14px;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--r); transition: border-color .3s, transform .3s;
+      counter-increment: ph
+    }
+    .phase:hover { border-color: rgba(47, 224, 168, .5); transform: translateX(6px) }
+    .pimg {
+      position: relative; height: 124px; border-radius: 14px; overflow: hidden;
+      background: linear-gradient(135deg, #0E5445, #073029)
+    }
+    .pimg img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s }
+    .phase:hover .pimg img { transform: scale(1.07) }
+    .pimg::before {
+      content: counter(ph, decimal-leading-zero); position: absolute; top: 10px; left: 10px; z-index: 1;
+      min-width: 38px; height: 38px; padding: 0 10px; border-radius: 99px; display: grid; place-items: center;
+      background: var(--mint); color: #02251C; font: 800 .9rem "Bricolage Grotesque", sans-serif
+    }
+    .phase:nth-child(n+9) .pimg::before { background: var(--sun); color: #2b2000 }
+    .pimg::after {
+      content: counter(ph, decimal-leading-zero); position: absolute; inset: 0; display: grid; place-items: center;
+      font: 800 2.6rem "Bricolage Grotesque", sans-serif; color: rgba(47, 224, 168, .25); z-index: 0
+    }
+    .pimg img { position: relative; z-index: 1 }
+    .phase h3 { font-size: 1.2rem; margin-bottom: 6px }
+    .phase p { color: var(--muted); font-size: .88rem; max-width: 640px }
+    .pm { text-align: right; white-space: nowrap; color: var(--muted); font-size: .8rem; display: grid; gap: 6px; justify-items: end }
+    .pm .lv { padding: 4px 11px; border-radius: 99px; background: rgba(47, 224, 168, .13); color: var(--mint); font-weight: 600; font-size: .72rem }
+    .pm .lv.adv { background: var(--sun); color: #2b2000; font-weight: 700 }
+    .plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: stretch }
+    .plan {
+      background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px 24px;
+      display: flex; flex-direction: column; position: relative
+    }
+    .plan.rec { border-color: var(--mint); background: linear-gradient(180deg, #0E5445, var(--card) 55%); box-shadow: 0 20px 60px rgba(47, 224, 168, .15) }
+    .badge { position: absolute; top: -13px; left: 24px; padding: 5px 14px; border-radius: 99px; background: var(--sun); color: #2b2000; font-size: .74rem; font-weight: 700 }
+    .plan h3 { font-size: 1.25rem }
+    .plan .pp { margin: 16px 0 4px; font: 800 2.6rem "Bricolage Grotesque", sans-serif; letter-spacing: -.05em; line-height: 1 }
+    .plan .pp small { font: 500 .9rem Inter, sans-serif; color: var(--muted); letter-spacing: 0; margin-left: 4px }
+    .plan .pp s { font: 400 .95rem Inter, sans-serif; color: var(--muted); margin-left: 8px; letter-spacing: 0 }
+    .save { color: var(--mint); font-size: .82rem; font-weight: 600; margin-bottom: 4px }
+    .eq { color: var(--muted); font-size: .8rem; margin-bottom: 4px }
+    .plan ul { list-style: none; margin: 18px 0 24px; display: grid; gap: 10px; flex: 1 }
+    .plan li { position: relative; padding-left: 24px; color: var(--muted); font-size: .86rem }
+    .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--mint); font-weight: 700 }
+    .plan li b { color: var(--sand); font-weight: 600 }
+    .plan .btn { justify-content: center; width: 100% }
+    .note { color: var(--muted); font-size: .82rem; margin-top: 22px; max-width: 720px }
+    @media(max-width:1000px) { .plans { grid-template-columns: repeat(2, 1fr) } }
+    @media(max-width:700px) { .phase { grid-template-columns: 1fr; gap: 14px; padding: 14px } .pimg { height: 170px } .pm { text-align: left; justify-items: start; grid-auto-flow: column; gap: 12px; align-items: center } }
+    @media(max-width:560px) { .plans { grid-template-columns: 1fr } .phase { padding: 20px } }
+
+
+    /* course page */
+    .hero2 { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: start }
+    .hero2 h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; margin: 14px 0; animation: fade .9s both }
+    .hero2 .lead { color: var(--muted); max-width: 580px; animation: fade .9s .15s both }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px }
+    .tags span { padding: 6px 14px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg2); font-size: .8rem; color: var(--sand); font-weight: 500 }
+    .enroll { background: var(--card); border: 1px solid var(--line); border-radius: 28px; overflow: hidden; animation: fade .9s .25s both; position: sticky; top: 92px }
+    .enroll .cover { aspect-ratio: 16/9; background: linear-gradient(135deg, #0E5445, #073029); position: relative; display: grid; place-items: center; overflow: hidden }
+    .enroll .cover::after { content: "FP"; position: absolute; font: 800 3rem "Bricolage Grotesque", sans-serif; color: rgba(47, 224, 168, .3) }
+    .enroll .cover img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover }
+    .eb { padding: 26px; display: grid; gap: 16px }
+    .eb .pp { font: 800 2.8rem "Bricolage Grotesque", sans-serif; letter-spacing: -.05em; line-height: 1 }
+    .eb .pp s { font: 400 1rem Inter, sans-serif; color: var(--muted); margin-left: 10px; letter-spacing: 0 }
+    .eb .save { color: var(--mint); font-size: .85rem; font-weight: 600 }
+    .eb .btn { justify-content: center; width: 100% }
+    .eb ul { list-style: none; display: grid; gap: 10px; padding-top: 6px; border-top: 1px solid var(--line) }
+    .eb li { display: flex; justify-content: space-between; gap: 12px; font-size: .88rem; color: var(--muted); padding-top: 10px }
+    .eb li b { color: var(--sand); font-weight: 600 }
+    .chk { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px }
+    .chk div { position: relative; padding: 18px 20px 18px 54px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg2); color: var(--sand); font-size: .92rem }
+    .chk div::before { content: "✓"; position: absolute; left: 18px; top: 16px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: #02251C; font-weight: 800; font-size: .8rem }
+    .mods { display: grid; gap: 12px; max-width: 860px; counter-reset: md }
+    .mods details { background: var(--bg2); border: 1px solid var(--line); border-radius: 16px; transition: border-color .25s; counter-increment: md }
+    .mods details[open] { border-color: rgba(47, 224, 168, .5) }
+    .mods summary { list-style: none; cursor: pointer; padding: 18px 22px; display: flex; align-items: center; gap: 16px; font: 700 1.1rem "Bricolage Grotesque", sans-serif; letter-spacing: -.02em }
+    .mods summary::-webkit-details-marker { display: none }
+    .mods summary::before { content: counter(md, decimal-leading-zero); flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: #02251C; font-size: .85rem }
+    .mods summary::after { content: "+"; margin-left: auto; color: var(--mint); font-size: 1.4rem; transition: transform .25s }
+    .mods details[open] summary::after { transform: rotate(45deg) }
+    .mods ul { list-style: none; padding: 0 22px 20px 78px; display: grid; gap: 8px; color: var(--muted); font-size: .9rem }
+    .mods li::before { content: "•"; color: var(--mint); margin-right: 10px }
+    @media(max-width:900px) { .hero2 { grid-template-columns: 1fr } .enroll { position: static } }
+    @media(max-width:560px) { .chk { grid-template-columns: 1fr } .mods ul { padding-left: 22px } }
+
+
+    /* bundled course cards */
+    .cclist { display: grid; gap: 20px }
+    .cc {
+      --ac: var(--mint); display: grid; grid-template-columns: 300px 1fr auto; gap: 28px; align-items: center;
+      background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--ac); border-radius: 22px;
+      padding: 16px 28px 16px 16px; transition: transform .35s cubic-bezier(.2, .8, .2, 1), border-color .3s
+    }
+    .cc:hover { transform: translateY(-5px); border-color: var(--ac) }
+    .cc.c2 { --ac: #FF8F70 } .cc.c3 { --ac: var(--sun) } .cc.c4 { --ac: #7CC6FF } .cc.c5 { --ac: #B79CFF }
+    .ccimg {
+      position: relative; height: 190px; border-radius: 14px; overflow: hidden; display: grid; place-items: center;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--ac) 40%, #073029), #073029)
+    }
+    .ccimg::after { content: attr(data-l); position: absolute; font: 800 4.5rem "Bricolage Grotesque", sans-serif; color: color-mix(in srgb, var(--ac) 55%, transparent) }
+    .ccimg img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: transform .6s }
+    .cc:hover .ccimg img { transform: scale(1.07) }
+    .ccn { position: absolute; top: 10px; left: 10px; z-index: 2; padding: 5px 12px; border-radius: 99px; background: rgba(4, 33, 28, .85); backdrop-filter: blur(8px); font-size: .72rem; font-weight: 700; color: var(--ac) }
+    .ccb .meta { display: flex; gap: 16px; color: var(--muted); font-size: .78rem; flex-wrap: wrap }
+    .ccb .lv { color: var(--ac); font-weight: 600 }
+    .ccb h3 { font-size: 1.45rem; margin: 8px 0 8px }
+    .ccb p { color: var(--muted); font-size: .9rem; max-width: 560px }
+    .ccb .mini { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px }
+    .ccb .mini span { padding: 4px 12px; border-radius: 99px; border: 1px solid var(--line); font-size: .74rem; color: var(--sand) }
+    .mac { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line) }
+    .mac .av {
+      width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex: none; display: grid; place-items: center;
+      background: var(--bg2); border: 2px solid var(--ac); color: var(--ac); font: 800 1rem "Bricolage Grotesque", sans-serif; position: relative
+    }
+    .mac .av img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
+    .mac small { display: block; color: var(--muted); font-size: .72rem; line-height: 1.2 }
+    .mac b { font-size: .88rem; font-weight: 600; line-height: 1.3 }
+    .ccp { text-align: center; display: grid; gap: 12px; justify-items: center; min-width: 150px }
+    .ccp .pr { font: 800 2rem "Bricolage Grotesque", sans-serif; letter-spacing: -.04em; line-height: 1 }
+    .ccp .pr s { display: block; font: 400 .85rem Inter, sans-serif; color: var(--muted); margin-top: 4px; letter-spacing: 0 }
+    .ccp .pr.free { color: var(--mint) }
+    .ccp .pr.soon { font-size: 1.1rem; color: var(--muted) }
+    .ccp .btn { min-height: 44px; padding: 0 20px; font-size: .86rem; width: 100%; justify-content: center }
+    .ccp .btn.off { opacity: .5; pointer-events: none }
+    .bundle-note { margin-top: 20px; color: var(--muted); font-size: .85rem }
+    @media(max-width:1000px) { .cc { grid-template-columns: 240px 1fr } .ccp { grid-column: 1/-1; grid-template-columns: 1fr auto; text-align: left; justify-items: stretch; align-items: center } .ccp .btn { width: auto } }
+    @media(max-width:640px) { .cc { grid-template-columns: 1fr; padding: 14px } .ccimg { height: 200px } .ccp { grid-template-columns: 1fr } .ccp .btn { width: 100% } }
+
+    /* reveal */
+    .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s }
+    .rv.in { opacity: 1; transform: none }
+
+    @media(max-width:900px) {
+      .story { grid-template-columns: 1fr; gap: 36px }
+      .stats { grid-template-columns: repeat(2, 1fr) }
+      .grid, .steps, .contact { grid-template-columns: repeat(2, 1fr) }
+      .burger { display: block; order: 3 }
+      .acts { margin-left: auto }
+      .acts .login { display: none }
+      .links {
+        display: none; position: fixed; top: 66px; left: 0; right: 0; flex-direction: column; gap: 0;
+        padding: 14px 20px 24px; background: rgba(4, 33, 28, .98); border-bottom: 1px solid var(--line); margin: 0
+      }
+      .links.open { display: flex }
+      .links a { padding: 14px 0; border-bottom: 1px solid var(--line) }
+    }
+    @media(max-width:560px) {
+      .grid, .steps, .contact { grid-template-columns: 1fr }
+      .ph { padding-top: 130px }
+      section { padding: 56px 0 }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important }
+      .rv { opacity: 1; transform: none }
+    }
+
+    /* ===== FOOTER ===== */
+    .clh-footer {
+      position: relative; overflow: hidden; padding: 88px 0 0;
+      background: radial-gradient(circle at 5% 0, rgba(47, 224, 168, .13), transparent 32%), linear-gradient(145deg, #031b17, #04110f 65%, #061c17)
+    }
+    .clh-footer::before {
+      content: ""; position: absolute; inset: 0 0 auto; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mint), var(--sun), transparent);
+      background-size: 200% 100%; animation: sheen 6s linear infinite
+    }
+    @keyframes sheen { to { background-position: 200% 0 } }
+    .clh-footer::after {
+      content: ""; position: absolute; width: 320px; height: 320px; bottom: -200px; right: -90px;
+      border-radius: 50%; background: rgba(47, 224, 168, .1); filter: blur(80px); pointer-events: none
+    }
+    .footer-main {
+      position: relative; z-index: 1; display: grid; grid-template-columns: 1.7fr 1fr 1.2fr 1fr;
+      gap: 55px; padding-bottom: 64px
+    }
+    .footer-logo { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 22px }
+    .footer-logo img { width: 44px; height: 44px; object-fit: contain }
+    .footer-logo span { color: var(--sand); font: 800 1.6rem "Bricolage Grotesque", sans-serif; letter-spacing: -.04em }
+    .footer-logo i { color: var(--mint); font-style: normal }
+    .footer-brand p { max-width: 330px; color: var(--muted); font-size: .9rem; line-height: 1.9 }
+    .footer-tagline {
+      display: inline-flex; align-items: center; gap: 12px; margin-top: 26px; padding: 9px 16px;
+      border: 1px solid var(--line); border-radius: 99px; background: rgba(244, 235, 214, .03);
+      color: var(--sand); font-size: .8rem; font-weight: 600; letter-spacing: .06em
+    }
+    .footer-tagline b, .footer-tagline .mint { color: var(--mint) }
+    .footer-column { display: flex; flex-direction: column; gap: 16px }
+    .footer-column h4 { color: var(--sand); font: 800 1rem "Bricolage Grotesque", sans-serif; margin: 4px 0 8px }
+    .footer-column h4::after {
+      content: ""; display: block; width: 26px; height: 2px; margin-top: 12px; border-radius: 5px;
+      background: var(--mint); transition: width .4s
+    }
+    .footer-column:hover h4::after { width: 52px }
+    .footer-column a {
+      display: flex; align-items: center; gap: 10px; width: fit-content; color: var(--muted);
+      font-size: .86rem; transition: color .25s, transform .25s
+    }
+    .footer-column a span { color: var(--mint); opacity: 0; transform: translate(-6px, 6px); transition: .25s }
+    .footer-column a:hover { color: var(--mint); transform: translateX(5px) }
+    .footer-column a:hover span { opacity: 1; transform: none }
+    .footer-bottom {
+      position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 22px; padding: 24px 0; border-top: 1px solid var(--line)
+    }
+    .footer-bottom p { color: var(--muted); font-size: .8rem }
+    .footer-bottom p strong { color: var(--sand) }
+    .footer-social { display: flex; align-items: center; gap: 10px }
+    .follow-text { color: var(--mint); font-size: .82rem; font-weight: 600; margin-right: 6px }
+    .footer-social a, .to-top {
+      display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 40px; height: 40px;
+      padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: rgba(244, 235, 214, .04);
+      color: var(--sand); font: 600 .8rem Inter, sans-serif; cursor: pointer;
+      transition: transform .3s, background .3s, color .3s, box-shadow .3s
+    }
+    .footer-social a:hover, .to-top:hover {
+      color: #02251C; background: var(--mint); border-color: var(--mint); transform: translateY(-4px);
+      box-shadow: 0 10px 26px rgba(47, 224, 168, .22)
+    }
+    .footer-social .whatsapp-link { color: var(--mint) }
+    .footer-social .whatsapp-link:hover { color: #02251C }
+    .to-top { margin-left: 8px; font-size: 1.1rem }
+    .footer-mark {
+      position: relative; z-index: 0; text-align: center; white-space: nowrap;
+      font: 800 clamp(3rem, 13.5vw, 12rem)/.8 "Bricolage Grotesque", sans-serif; letter-spacing: -.06em;
+      color: transparent; -webkit-text-stroke: 1px rgba(47, 224, 168, .22);
+      -webkit-mask-image: linear-gradient(#000 25%, transparent 95%); mask-image: linear-gradient(#000 25%, transparent 95%);
+      margin-top: 6px; padding-bottom: 6px; user-select: none
+    }
+    @media(max-width:900px) { .footer-main { grid-template-columns: 1.5fr 1fr; gap: 44px 34px } }
+    @media(max-width:560px) {
+      .clh-footer { padding-top: 60px }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 38px 20px; padding-bottom: 44px }
+      .footer-brand { grid-column: 1/-1 }
+      .footer-brand p { max-width: 100% }
+      .footer-column a { font-size: .8rem }
+      .footer-bottom { flex-direction: column; align-items: flex-start }
+      .footer-social { flex-wrap: wrap }
+      .follow-text { width: 100% }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="prog"></div>
+  <header id="hd">
+    <div class="wrap nav">
+      <a href="HOME PAGE.HTML" class="brand" aria-label="CaabiLearnHub Home"><img
+          src="./CaabiLearnHub Modern Logo-Photoroom.png" alt=""
+          onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+      <nav class="links" id="links" aria-label="Main navigation">
+        <a href="HOME PAGE.HTML">Home</a><a href="./courses.html" class="on">Courses</a><a
+          href="Mentorship.html">Mentorship</a><a href="./About.html">About Us</a><a
+          href="./Contact.html">Contact</a>
+      </nav>
+      <div class="acts"><a href="./login.html" class="login">Login</a><a href="./signup.html" class="btn p">Get Started ↗</a></div>
+      <button class="burger" id="bg" aria-label="Open navigation menu" aria-expanded="false"
+        aria-controls="links"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="ph" style="padding-bottom:60px">
+      <div class="wrap hero2">
+        <div>
+          <h1>Frontend Pro Program: noqo <span class="mint">Frontend Developer</span> xirfadle ah.</h1>
+          <p class="lead">Koorso isku habaysan oo isku xira HTML, CSS, JavaScript iyo React. Baro Components, Hooks, State Management iyo MongoDB &amp; NoSQL Fundamentals, kadibna dhis projects dhab ah, bilow ilaa dhammaad.</p>
+          <div class="tags"><span>HTML (Free)</span><span>CSS</span><span>JavaScript</span><span>React</span><span>State Management</span><span>MongoDB</span></div>
+        </div>
+        <aside class="enroll">
+          <div class="cover"><img src="./images/Frontend Pro Program Course Thumbnail.png" alt="Frontend Pro Program" onerror="this.style.display='none'"></div>
+          <div class="eb">
+            <div><div class="pp">$25.00<s>$40.00</s></div><div class="save">Save 30%</div></div>
+            <a class="btn p" href="https://wa.me/252907071342?text=Salaan%2C%20waxaan%20rabaa%20inaan%20iska%20diiwaan%20galiyo%20Frontend%20Pro%20Program." target="_blank" rel="noopener noreferrer">Iska diiwaan geli ↗</a>
+            <a class="btn o" href="./signup.html">Samee akoon</a>
+            <ul>
+              <li><span>Heerka</span><b>Advanced</b></li>
+              <li><span>Casharro</span><b>272 lessons</b></li>
+              <li><span>Muddada</span><b>85 saac</b></li>
+              <li><span>Luqadda</span><b>Af-Soomaali</b></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section style="padding-top:20px" id="courses">
+      <div class="wrap">
+        <div class="sh rv"><h2>Koorsooyinka ku jira <span>barnaamijka</span></h2><p>HTML waa bilaash. Kuwa kale waa lacag, mid walba wuxuu leeyahay kaarkiisa, sawirkiisa iyo macallinkiisa.</p></div>
+        <div class="cclist">
+        <article class="cc c1 rv">
+          <div class="ccimg" data-l="H"><img src="./Images/HTML COURSE CHAT.png" alt="HTML5 for Beginners: Build Your First Web Pages" loading="lazy" onerror="this.style.display='none'"><span class="ccn">Koorso 1 · Free</span></div>
+          <div class="ccb">
+            <div class="meta"><span class="lv">Beginner</span><span>▤ 47 lessons</span><span>◷ 6.2h</span></div>
+            <h3>HTML5 for Beginners: Build Your First Web Pages</h3>
+            <p>Ka bilow file-kaaga HTML ugu horreeya ilaa bogag dhammaystiran: elements, headings, links, images iyo forms.</p>
+            <div class="mini"><span>HTML5</span><span>Semantic</span><span>Forms</span></div>
+            <div class="mac"><div class="av">M<img src="./Images/Image Founder Suhayb black and White.jpeg" alt="" onerror="this.style.display='none'"></div><div><small>Macalin</small><b>Suhaib Mohamed</b></div></div>
+          </div>
+          <div class="ccp"><div class="pr free">Free</div><a class="btn p" href="Html Course.html">Bilow Casharka ↗</a></div>
+        </article>
+        <article class="cc c2 rv">
+          <div class="ccimg" data-l="C"><img src="./Images/Css ourse.png" alt="CSS Masterclass: From Fundamentals to Advanced Styling" loading="lazy" onerror="this.style.display='none'"><span class="ccn">Koorso 2</span></div>
+          <div class="ccb">
+            <div class="meta"><span class="lv">Beginner</span><span>▤ 47 lessons</span><span>◷ 6.2h</span></div>
+            <h3>CSS Masterclass: From Fundamentals to Advanced Styling</h3>
+            <p>Flexbox, Grid iyo responsive design. Dhis layouts iyo website dhamaystiran oo ku shaqeeya shaashad kasta.</p>
+            <div class="mini"><span>Flexbox</span><span>Grid</span><span>Responsive</span></div>
+            <div class="mac"><div class="av">M<img src="./Images/Image Founder Suhayb black and White.jpeg"alt="" onerror="this.style.display='none'"></div><div><small>Macalin</small><b>Suhaib Mohamed</b></div></div>
+          </div>
+          <div class="ccp"><div class="pr">$5<s>$10</s></div><a class="btn o" href="Css Course.html">Iibso ↗</a></div>
+        </article>
+        <article class="cc c3 rv">
+          <div class="ccimg" data-l="JS"><img src="./Images/Black and Orange Burger Food YouTube Thumbnail.png" alt="JavaScript Masterclass: ES6+, DOM & Async Patterns" loading="lazy" onerror="this.style.display='none'"><span class="ccn">Koorso 3</span></div>
+          <div class="ccb">
+            <div class="meta"><span class="lv">Beginner</span><span>▤ 52 lessons</span><span>◷ 20.9h</span></div>
+            <h3>JavaScript Masterclass: ES6+, DOM & Async Patterns</h3>
+            <p>ES6+, DOM manipulation, asynchronous programming, APIs iyo patterns dhabta ah ee horumarinta casriga ah.</p>
+            <div class="mini"><span>ES6+</span><span>DOM</span><span>Async/APIs</span></div>
+            <div class="mac"><div class="av">M<img src="./Images/Image Founder Suhayb black and White.jpeg" alt="" onerror="this.style.display='none'"></div><div><small>Macalin</small><b>Suhaib Mohamed</b></div></div>
+          </div>
+          <div class="ccp"><div class="pr">$10<s>$15</s></div><a class="btn o" href="Javascript.html">Iibso ↗</a></div>
+        </article>
+        <article class="cc c4 rv">
+          <div class="ccimg" data-l="R"><img src="./Images/react-mastery.webp" alt="React.js Masterclass: Components, Hooks & State Management" loading="lazy" onerror="this.style.display='none'"><span class="ccn">Koorso 4</span></div>
+          <div class="ccb">
+            <div class="meta"><span class="lv">Intermediate</span><span>▤ 126 lessons</span><span>◷ 19.7h</span></div>
+            <h3>React.js Masterclass: Components, Hooks & State Management</h3>
+            <p>Components, JSX, props, state, hooks, State Management, APIs iyo forms, ilaa applications dhab ah.</p>
+            <div class="mini"><span>Components</span><span>Hooks</span><span>State Management</span></div>
+            <div class="mac"><div class="av">M<img src="./Images/Image Founder Suhayb black and White.jpeg" alt="" onerror="this.style.display='none'"></div><div><small>Macalin</small><b>Suhaib Mohamed</b></div></div>
+          </div>
+          <div class="ccp"><div class="pr">$10<s>$15</s></div><a class="btn o" href="React.js Masterclass.html">Iibso ↗</a></div>
+        </article>
+        <article class="cc c5 rv">
+          <div class="ccimg" data-l="M"><img src="./Images/Man.png" alt="MongoDB & NoSQL Fundamentals" loading="lazy" onerror="this.style.display='none'"><span class="ccn">Koorso 5</span></div>
+          <div class="ccb">
+            <div class="meta"><span class="lv">Intermediate</span><span>▤ Soo socota</span><span>◷ Soo socota</span></div>
+            <h3>MongoDB & NoSQL Fundamentals</h3>
+            <p>NoSQL databases, MongoDB collections, documents, CRUD operations, queries iyo isku xirka database-ka iyo app-ka.</p>
+            <div class="mini"><span>Documents</span><span>CRUD</span><span>Queries</span></div>
+            <div class="mac"><div class="av">M<img src="./Images/Image Founder Suhayb black and White.jpeg" alt="" onerror="this.style.display='none'"></div><div><small>Macalin</small><b>Suhaib Mohamed</b></div></div>
+          </div>
+          <div class="ccp"><div class="pr soon">Soo socota</div><a class="btn o off" href="#" aria-disabled="true" tabindex="-1">Dhawaan ↗</a></div>
+        </article>
+        </div>
+        <p class="bundle-note rv">Ma rabtaa dhammaan hal mar? Qaado <b style="color:var(--sand)">Frontend Pro Program</b> oo dhan, qiimaha ku jira kaarka dhinaca.</p>
+      </div>
+    </section>
+
+<section id="curriculum" class="curriculum-section">
+  <div class="curriculum-wrap">
+
+    <div class="curriculum-header">
+      <span class="section-tag">
+        <span class="tag-dot"></span>
+        COURSE CURRICULUM
+      </span>
+
+      <h2>Baro. Dhis. <span>Horumar.</span></h2>
+
+      <p>
+        Lix qaybood oo si nidaamsan kuu gaarsiinaya heerka
+        Frontend Developer xirfad leh.
+      </p>
+
+      <div class="curriculum-meta">
+        <span>✦ 6 Modules</span>
+        <span>✦ Practical Learning</span>
+        <span>✦ Beginner to Advanced</span>
+      </div>
+    </div>
+
+    <div class="curriculum-content">
+
+      <div class="curriculum-side">
+        <div class="side-card">
+          <div class="side-icon">⌘</div>
+          <span class="side-label">YOUR LEARNING PATH</span>
+
+          <h3>Frontend Pro<br>Development</h3>
+
+          <p>
+            Dhis xirfadaha lagama maarmaanka u ah samaynta
+            websites iyo web applications casri ah.
+          </p>
+
+          <div class="side-line"></div>
+
+          <div class="side-stats">
+            <div>
+              <strong>06</strong>
+              <small>Modules</small>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <small>Practical</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modules-list">
+
+        <!-- MODULE 01 -->
+        <details class="module-item" open>
+          <summary>
+            <span class="module-number">01</span>
+            <span class="module-icon">🌐</span>
+
+            <span class="module-info">
+              <strong>HTML5: Aasaaska Bogagga</strong>
+              <small>Baro qaab-dhismeedka website-yada</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>Qaab-dhismeedka HTML iyo Semantic Elements</li>
+              <li>Headings, Paragraphs, Links iyo Images</li>
+              <li>Lists, Tables iyo Forms</li>
+              <li>Accessibility aasaasi ah</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- MODULE 02 -->
+        <details class="module-item">
+          <summary>
+            <span class="module-number">02</span>
+            <span class="module-icon">🎨</span>
+
+            <span class="module-info">
+              <strong>CSS: Qaabaynta Casriga ah</strong>
+              <small>Samee designs qurux badan oo responsive ah</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>Selectors, Box Model, Colors iyo Typography</li>
+              <li>Flexbox iyo CSS Grid Layouts</li>
+              <li>Responsive Design iyo Media Queries</li>
+              <li>Transitions iyo Animations</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- MODULE 03 -->
+        <details class="module-item">
+          <summary>
+            <span class="module-number">03</span>
+            <span class="module-icon">⚡</span>
+
+            <span class="module-info">
+              <strong>JavaScript: Programming Dhab ah</strong>
+              <small>Ku dar logic iyo functionality websites-ka</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>Variables, Functions, Arrays iyo Objects</li>
+              <li>ES6+: Arrow Functions, Destructuring iyo Modules</li>
+              <li>DOM Manipulation iyo Events</li>
+              <li>Async/Await, Fetch iyo APIs</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- MODULE 04 -->
+        <details class="module-item">
+          <summary>
+            <span class="module-number">04</span>
+            <span class="module-icon">⚛️</span>
+
+            <span class="module-info">
+              <strong>React: Components & Hooks</strong>
+              <small>Dhis web applications casri ah</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>JSX, Components iyo Props</li>
+              <li>useState iyo useEffect</li>
+              <li>Forms, Lists iyo Conditional Rendering</li>
+              <li>Routing iyo App Architecture</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- MODULE 05 -->
+        <details class="module-item">
+          <summary>
+            <span class="module-number">05</span>
+            <span class="module-icon">🔄</span>
+
+            <span class="module-info">
+              <strong>State Management</strong>
+              <small>Maamul xogta application-kaaga</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>Lifting State Up iyo Sharing Data</li>
+              <li>React Context API</li>
+              <li>useReducer iyo State Patterns</li>
+              <li>Dhisidda Applications waaweyn oo nidaamsan</li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- MODULE 06 -->
+        <details class="module-item">
+          <summary>
+            <span class="module-number">06</span>
+            <span class="module-icon">🗄️</span>
+
+            <span class="module-info">
+              <strong>MongoDB & NoSQL Fundamentals</strong>
+              <small>Baro kaydinta iyo maaraynta xogta</small>
+            </span>
+
+            <span class="module-toggle"></span>
+          </summary>
+
+          <div class="module-body">
+            <ul>
+              <li>Documents, Collections iyo NoSQL Databases</li>
+              <li>CRUD Operations iyo Queries</li>
+              <li>Indexing iyo Aggregation Fundamentals</li>
+              <li>Ku xidh Database-ka Web Application-ka</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+    /* CURRICULUM SECTION */
+#curriculum {
+  padding: 110px 0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(0,200,150,.10), transparent 35%),
+    #061b17;
+  color: #f4f8f5;
+  overflow: hidden;
+}
+
+.curriculum-wrap {
+  width: min(1180px, 92%);
+  margin: auto;
+}
+
+.curriculum-header {
+  max-width: 750px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid rgba(0,200,150,.3);
+  border-radius: 30px;
+  color: #00c896;
+  background: rgba(0,200,150,.08);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00c896;
+  box-shadow: 0 0 12px #00c896;
+}
+
+.curriculum-header h2 {
+  margin: 22px 0 15px;
+  font-size: clamp(35px, 5vw, 55px);
+  font-weight: 850;
+  letter-spacing: -2px;
+}
+
+.curriculum-header h2 span {
+  color: #00c896;
+}
+
+.curriculum-header p {
+  color: #9eb7ad;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.curriculum-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.curriculum-meta span {
+  padding: 9px 13px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 30px;
+  color: #c1d5cc;
+  background: rgba(255,255,255,.035);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* MAIN LAYOUT */
+.curriculum-content {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.curriculum-side {
+  position: sticky;
+  top: 25px;
+}
+
+.side-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  border: 1px solid rgba(0,200,150,.25);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #0b382d, #08251e);
+  box-shadow: 0 20px 55px rgba(0,0,0,.2);
+}
+
+.side-card::after {
+  content: "⌘";
+  position: absolute;
+  right: 5px;
+  bottom: -35px;
+  color: rgba(0,200,150,.06);
+  font-size: 150px;
+}
+
+.side-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 25px;
+  border: 1px solid rgba(0,200,150,.3);
+  border-radius: 14px;
+  background: rgba(0,200,150,.1);
+  color: #00c896;
+  font-size: 25px;
+}
+
+.side-label {
+  color: #00c896;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.side-card h3 {
+  margin: 14px 0;
+  font-size: 27px;
+  line-height: 1.2;
+}
+
+.side-card p {
+  color: #a1b8ae;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.side-line {
+  height: 1px;
+  margin: 25px 0;
+  background: rgba(255,255,255,.1);
+}
+
+.side-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.side-stats div + div {
+  padding-left: 18px;
+  border-left: 1px solid rgba(255,255,255,.1);
+}
+
+.side-stats strong {
+  display: block;
+  color: #00c896;
+  font-size: 27px;
+}
+
+.side-stats small {
+  color: #9eb7ad;
+  font-size: 11px;
+}
+
+/* MODULE CARDS */
+.modules-list {
+  display: grid;
+  gap: 13px;
+}
+
+.module-item {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 17px;
+  background: linear-gradient(130deg, #0b3028, #08251f);
+  transition: .3s ease;
+}
+
+.module-item:hover,
+.module-item[open] {
+  border-color: rgba(0,200,150,.45);
+  background: linear-gradient(130deg, #104234, #092b23);
+  box-shadow: 0 12px 30px rgba(0,0,0,.13);
+}
+
+.module-item summary {
+  min-height: 88px;
+  display: grid;
+  grid-template-columns: 35px 43px 1fr 35px;
+  gap: 13px;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.module-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.module-number {
+  color: #00c896;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.module-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0,200,150,.2);
+  border-radius: 12px;
+  background: rgba(0,200,150,.09);
+  font-size: 19px;
+}
+
+.module-info strong,
+.module-info small {
+  display: block;
+}
+
+.module-info strong {
+  color: #f4f8f5;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.module-info small {
+  margin-top: 4px;
+  color: #9eb7ad;
+  font-size: 11px;
+}
+
+/* PLUS AND MINUS */
+.module-toggle {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0,200,150,.35);
+  border-radius: 50%;
+  background: rgba(0,200,150,.08);
+  color: #00c896;
+  transition: .25s ease;
+}
+
+.module-toggle::before {
+  content: "+";
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.module-item[open] .module-toggle {
+  color: #05251d;
+  background: #00c896;
+  border-color: #00c896;
+  transform: rotate(180deg);
+}
+
+.module-item[open] .module-toggle::before {
+  content: "−";
+}
+
+/* MODULE CONTENT */
+.module-body {
+  padding: 0 25px 22px 111px;
+  animation: moduleShow .3s ease;
+}
+
+.module-body ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(255,255,255,.09);
+  list-style: none;
+}
+
+.module-body li {
+  position: relative;
+  padding-left: 19px;
+  color: #c0d3ca;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.module-body li::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00c896;
+  box-shadow: 0 0 9px rgba(0,200,150,.4);
+}
+
+@keyframes moduleShow {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+  .curriculum-content {
+    grid-template-columns: 1fr;
+  }
+
+  .curriculum-side {
+    position: static;
+  }
+
+  .side-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  #curriculum {
+    padding: 75px 0;
+  }
+
+  .curriculum-header {
+    margin-bottom: 35px;
+  }
+
+  .curriculum-header h2 {
+    font-size: 36px;
+  }
+
+  .curriculum-meta {
+    gap: 7px;
+  }
+
+  .curriculum-meta span {
+    font-size: 10px;
+  }
+
+  .side-card {
+    padding: 23px;
+  }
+
+  .module-item summary {
+    grid-template-columns: 25px 36px 1fr 30px;
+    gap: 8px;
+    padding: 14px 11px;
+  }
+
+  .module-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .module-info strong {
+    font-size: 12px;
+  }
+
+  .module-info small {
+    font-size: 10px;
+  }
+
+  .module-body {
+    padding: 0 15px 20px 80px;
+  }
+
+  .module-body li {
+    font-size: 11px;
+  }
+}
+</style>
+
+ <section class="showcase" id="preview">
+  <div class="showcase-container">
+
+    <!-- Header -->
+    <div class="showcase-header">
+      <div class="showcase-heading">
+        <span class="showcase-eyebrow">
+          <span class="eyebrow-dot"></span>
+          LEARN WITH CAABILEARNHUB
+        </span>
+
+        <h2>
+          Wax ka Ogow <span>Frontend Pro Program</span> oo bilaaw <span>Casharada
+          <span>.</span>
+        </h2>
+
+        <p>
+          Daawo hordhaca koorsada oo ogow safarka aqooneed
+          ee ku sugaya. Baro sida aad uga bilaabi karto eber
+          ilaa aad ka dhisi karto websites casri ah.
+        </p>
+      </div>
+
+      <div class="showcase-number">
+        <span>01</span>
+        <span class="number-line"></span>
+        <span>PREVIEW</span>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="showcase-grid">
+
+      <!-- Video Area -->
+      <div class="showcase-main">
+
+        <div class="showcase-video">
+
+          <video
+            id="showcaseVideo"
+            poster="./Images/Frontend Pro Program Course Thumbnail.png"
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source src="./Images/30.mp4" type="video/mp4">
+            Browser-kaagu ma taageerayo video.
+          </video>
+
+          <!-- Video Overlay -->
+          <div class="showcase-video-overlay" id="showcaseOverlay">
+
+            <div class="showcase-overlay-top">
+              <span class="preview-badge">
+                <span class="badge-dot"></span>
+                FREE PREVIEW
+              </span>
+
+              <span class="preview-quality">HD VIDEO</span>
+            </div>
+
+            <div class="showcase-center">
+              <button
+                class="showcase-play"
+                id="showcasePlay"
+                aria-label="Play course preview"
+                type="button"
+              >
+                <span>▶</span>
+              </button>
+
+              <h3>Welcome to Frontend Pro</h3>
+              <p>Your journey starts here.</p>
+            </div>
+
+            <div class="showcase-overlay-bottom">
+              <span>COURSE INTRODUCTION</span>
+              <span>CAABILEARNHUB</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Video Bottom Information -->
+        <div class="showcase-video-bottom">
+
+          <div class="video-bottom-left">
+            <span class="showcase-mini-dot"></span>
+
+            <div>
+              <strong>Course Introduction</strong>
+              <small>Start your learning journey</small>
+            </div>
+          </div>
+
+          <div class="video-bottom-right">
+            <span class="video-type">PREVIEW</span>
+            <span class="video-duration">HD</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="showcase-sidebar">
+
+        <div class="showcase-sidebar-top">
+
+          <span class="showcase-tag">
+            INSIDE THIS PROGRAM
+          </span>
+
+          <h3>
+            From beginner
+            <span>to builder.</span>
+          </h3>
+
+          <p>
+            Barnaamij dhammaystiran oo kuu diyaarinaya
+            inaad noqoto Frontend Developer xirfad leh.
+          </p>
+
+        </div>
+
+        <!-- Learning Path -->
+        <div class="showcase-lessons">
+
+          <div class="showcase-lesson">
+            <div class="lesson-icon">01</div>
+
+            <div class="lesson-content">
+              <h4>HTML Fundamentals</h4>
+              <p>Structure & Semantic HTML</p>
+            </div>
+
+            <span class="lesson-check">✓</span>
+          </div>
+
+          <div class="showcase-lesson">
+            <div class="lesson-icon">02</div>
+
+            <div class="lesson-content">
+              <h4>CSS Mastery</h4>
+              <p>Design & Responsive Layouts</p>
+            </div>
+
+            <span class="lesson-check">✓</span>
+          </div>
+
+          <div class="showcase-lesson">
+            <div class="lesson-icon">03</div>
+
+            <div class="lesson-content">
+              <h4>JavaScript</h4>
+              <p>Logic & Interactive Websites</p>
+            </div>
+
+            <span class="lesson-check">✓</span>
+          </div>
+
+          <div class="showcase-lesson">
+            <div class="lesson-icon">04</div>
+
+            <div class="lesson-content">
+              <h4>React.js</h4>
+              <p>Components, Hooks & State</p>
+            </div>
+
+            <span class="lesson-check">✓</span>
+          </div>
+
+        </div>
+
+        <!-- CTA -->
+        <a href="#curriculum" class="showcase-link">
+          <span>Explore Full Curriculum</span>
+          <span class="link-arrow">↗</span>
+        </a>
+
+      </aside>
+
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="showcase-bottom">
+
+      <div class="showcase-brand">
+        CAABI<span>LEARNHUB</span>
+      </div>
+
+      <div class="showcase-footer-text">
+        LEARN SOMETHING. BUILD SOMETHING.
+      </div>
+
+      <div class="showcase-footer-status">
+        <span></span>
+        LEARNING STARTS HERE
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+    /* =========================================
+   CAABILEARNHUB — VIDEO PREVIEW SECTION
+   Premium Modern Design
+========================================= */
+
+.showcase {
+  --sc-mint: #2FE0A8;
+  --sc-dark: #061711;
+  --sc-card: #0A241B;
+  --sc-border: rgba(244, 255, 249, .09);
+  --sc-muted: #9DBBB1;
+  --sc-white: #F4F9F6;
+
+  position: relative;
+  isolation: isolate;
+  padding: 105px 0 75px;
+  overflow: hidden;
+  color: var(--sc-white);
+  background:
+    radial-gradient(
+      ellipse at 10% 5%,
+      rgba(47, 224, 168, .09),
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 95% 80%,
+      rgba(47, 224, 168, .07),
+      transparent 35%
+    ),
+    var(--sc-dark);
+
+  font-family: 'Inter', sans-serif;
+}
+
+/* Background Grid */
+
+.showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-image:
+    linear-gradient(rgba(47, 224, 168, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 224, 168, .035) 1px, transparent 1px);
+
+  background-size: 55px 55px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
+
+  pointer-events: none;
+}
+
+.showcase::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 550px;
+  height: 550px;
+  right: -250px;
+  top: 20%;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(47, 224, 168, .12),
+    transparent 68%
+  );
+
+  pointer-events: none;
+}
+
+.showcase-container {
+  position: relative;
+  width: min(1140px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 43px;
+}
+
+.showcase-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 9px 15px;
+
+  border: 1px solid rgba(47, 224, 168, .2);
+  border-radius: 50px;
+
+  background: rgba(47, 224, 168, .07);
+
+  color: var(--sc-mint);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sc-mint);
+  box-shadow: 0 0 12px var(--sc-mint);
+}
+
+.showcase-header h2 {
+  margin: 21px 0 14px;
+
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(35px, 5vw, 59px);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -2.7px;
+}
+
+.showcase-header h2 span {
+  color: var(--sc-mint);
+}
+
+.showcase-heading p {
+  max-width: 530px;
+  color: var(--sc-muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.showcase-number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  white-space: nowrap;
+
+  color: var(--sc-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.showcase-number > span:first-child {
+  color: var(--sc-mint);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 30px;
+}
+
+.number-line {
+  width: 35px;
+  height: 1px;
+  background: rgba(47, 224, 168, .4);
+}
+
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 25px;
+  align-items: stretch;
+}
+
+/* =========================================
+   VIDEO PLAYER
+========================================= */
+
+.showcase-main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 0;
+}
+
+.showcase-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+  border-radius: 23px;
+
+  background: #0B241A;
+  border: 1px solid rgba(47, 224, 168, .23);
+
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, .32),
+    0 0 40px rgba(47, 224, 168, .05);
+
+  transition: border-color .35s, box-shadow .35s;
+}
+
+.showcase-video:hover {
+  border-color: rgba(47, 224, 168, .55);
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .4),
+    0 0 55px rgba(47, 224, 168, .09);
+}
+
+.showcase-video video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  display: block;
+
+  background: #031711;
+}
+
+/* Overlay */
+
+.showcase-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 20, 13, .5),
+      transparent 35%,
+      rgba(3, 20, 13, .75)
+    );
+
+  transition: opacity .35s, visibility .35s;
+}
+
+.showcase-video.is-playing .showcase-video-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Overlay Top */
+
+.showcase-overlay-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 13px;
+
+  border-radius: 50px;
+  background: rgba(3, 20, 13, .75);
+  border: 1px solid rgba(255,255,255,.12);
+
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sc-mint);
+  box-shadow: 0 0 10px var(--sc-mint);
+}
+
+.preview-quality {
+  padding: 7px 11px;
+  border-radius: 5px;
+
+  color: white;
+  background: rgba(3, 20, 13, .65);
+
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+/* Center Play Button */
+
+.showcase-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.showcase-play {
+  position: relative;
+
+  width: 83px;
+  height: 83px;
+
+  display: grid;
+  place-items: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--sc-mint);
+  color: #04251A;
+
+  font-size: 25px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 35px rgba(47, 224, 168, .4),
+    0 0 0 12px rgba(47, 224, 168, .12);
+
+  transition: transform .3s, box-shadow .3s;
+}
+
+.showcase-play:hover {
+  transform: scale(1.1);
+
+  box-shadow:
+    0 15px 45px rgba(47, 224, 168, .55),
+    0 0 0 17px rgba(47, 224, 168, .1);
+}
+
+.showcase-play span {
+  transform: translateX(3px);
+}
+
+.showcase-play:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 6px;
+}
+
+.showcase-center h3 {
+  margin: 24px 0 7px;
+
+  color: white;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(17px, 2.5vw, 24px);
+  font-weight: 800;
+  letter-spacing: -.5px;
+}
+
+.showcase-center p {
+  margin: 0;
+  color: rgba(255,255,255,.75);
+  font-size: 11px;
+}
+
+/* Overlay Bottom */
+
+.showcase-overlay-bottom {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: rgba(255,255,255,.8);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+/* =========================================
+   VIDEO INFO BAR
+========================================= */
+
+.showcase-video-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  padding: 15px 18px;
+
+  border-radius: 14px;
+  border: 1px solid var(--sc-border);
+
+  background: #0B2118;
+}
+
+.video-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.showcase-mini-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--sc-mint);
+
+  box-shadow: 0 0 0 5px rgba(47, 224, 168, .1);
+}
+
+.video-bottom-left strong {
+  display: block;
+  color: var(--sc-white);
+  font-size: 11px;
+}
+
+.video-bottom-left small {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--sc-muted);
+  font-size: 9px;
+}
+
+.video-bottom-right {
+  display: flex;
+  gap: 8px;
+}
+
+.video-type,
+.video-duration {
+  padding: 7px 10px;
+  border-radius: 6px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+
+.video-type {
+  background: rgba(47, 224, 168, .1);
+  color: var(--sc-mint);
+}
+
+.video-duration {
+  background: rgba(255,255,255,.06);
+  color: var(--sc-muted);
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.showcase-sidebar {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  padding: 28px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(47, 224, 168, .16);
+  border-radius: 23px;
+
+  background:
+    linear-gradient(
+      150deg,
+      #104333 0%,
+      #0A2B20 45%,
+      #081E17 100%
+    );
+}
+
+.showcase-sidebar::before {
+  content: "";
+
+  position: absolute;
+  top: -120px;
+  right: -100px;
+
+  width: 250px;
+  height: 250px;
+
+  border-radius: 50%;
+  border: 1px solid rgba(47, 224, 168, .13);
+
+  box-shadow:
+    0 0 0 30px rgba(47, 224, 168, .025),
+    0 0 0 60px rgba(47, 224, 168, .02);
+
+  pointer-events: none;
+}
+
+.showcase-sidebar-top {
+  position: relative;
+}
+
+.showcase-tag {
+  display: inline-block;
+  margin-bottom: 12px;
+
+  color: var(--sc-mint);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.showcase-sidebar-top h3 {
+  margin: 0 0 12px;
+
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 27px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.showcase-sidebar-top h3 span {
+  display: block;
+  color: var(--sc-mint);
+}
+
+.showcase-sidebar-top p {
+  margin: 0;
+
+  color: rgba(244, 249, 246, .68);
+
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   LESSON LIST
+========================================= */
+
+.showcase-lessons {
+  position: relative;
+
+  display: grid;
+  gap: 10px;
+
+  flex: 1;
+}
+
+.showcase-lesson {
+  display: grid;
+  grid-template-columns: 39px 1fr 25px;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+
+  background: rgba(3, 20, 13, .32);
+
+  transition:
+    transform .3s,
+    border-color .3s,
+    background .3s;
+}
+
+.showcase-lesson:hover {
+  transform: translateX(4px);
+
+  border-color: rgba(47, 224, 168, .35);
+  background: rgba(3, 20, 13, .65);
+}
+
+.lesson-icon {
+  width: 39px;
+  height: 39px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: rgba(47, 224, 168, .1);
+  color: var(--sc-mint);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.lesson-content h4 {
+  margin: 0 0 5px;
+
+  color: var(--sc-white);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.lesson-content p {
+  margin: 0;
+
+  color: var(--sc-muted);
+
+  font-size: 9px;
+}
+
+.lesson-check {
+  width: 24px;
+  height: 24px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: rgba(47, 224, 168, .12);
+  color: var(--sc-mint);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* =========================================
+   CTA LINK
+========================================= */
+
+.showcase-link {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 50px;
+  padding: 0 16px;
+
+  border-radius: 11px;
+
+  background: var(--sc-mint);
+  color: #03251A;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  transition: transform .3s, box-shadow .3s;
+}
+
+.showcase-link:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 12px 30px rgba(47, 224, 168, .22);
+}
+
+.link-arrow {
+  width: 29px;
+  height: 29px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #03251A;
+  color: var(--sc-mint);
+
+  font-size: 15px;
+
+  transition: transform .3s;
+}
+
+.showcase-link:hover .link-arrow {
+  transform: rotate(45deg);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.showcase-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  margin-top: 35px;
+  padding-top: 23px;
+
+  border-top: 1px solid var(--sc-border);
+}
+
+.showcase-brand {
+  color: var(--sc-white);
+
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.showcase-brand span {
+  color: var(--sc-mint);
+}
+
+.showcase-footer-text,
+.showcase-footer-status {
+  color: var(--sc-muted);
+
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+}
+
+.showcase-footer-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.showcase-footer-status span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--sc-mint);
+  box-shadow: 0 0 10px var(--sc-mint);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 950px) {
+
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-sidebar {
+    min-height: auto;
+  }
+
+  .showcase-lessons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .showcase-link {
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .showcase {
+    padding: 75px 0 55px;
+  }
+
+  .showcase-container {
+    width: calc(100% - 30px);
+  }
+
+  .showcase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 17px;
+    margin-bottom: 28px;
+  }
+
+  .showcase-header h2 {
+    font-size: 38px;
+    letter-spacing: -1.8px;
+  }
+
+  .showcase-number {
+    padding: 0;
+  }
+
+  .showcase-grid {
+    gap: 17px;
+  }
+
+  .showcase-video {
+    border-radius: 17px;
+  }
+
+  .showcase-video-overlay {
+    padding: 13px;
+  }
+
+  .showcase-play {
+    width: 65px;
+    height: 65px;
+    font-size: 20px;
+  }
+
+  .showcase-center h3 {
+    margin-top: 17px;
+    font-size: 16px;
+  }
+
+  .showcase-center p {
+    font-size: 9px;
+  }
+
+  .showcase-video-label {
+    top: 12px;
+    left: 12px;
+    font-size: 8px;
+  }
+
+  .showcase-overlay-bottom {
+    font-size: 7px;
+  }
+
+  .showcase-video-bottom {
+    padding: 12px;
+  }
+
+  .showcase-sidebar {
+    padding: 21px;
+    border-radius: 18px;
+  }
+
+  .showcase-sidebar-top h3 {
+    font-size: 25px;
+  }
+
+  .showcase-lessons {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase *,
+  .showcase *::before,
+  .showcase *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+  const video = document.getElementById("showcaseVideo");
+  const playButton = document.getElementById("showcasePlay");
+  const videoContainer = document.querySelector(".showcase-video");
+
+  if (!video || !playButton || !videoContainer) return;
+
+  // Play video
+  playButton.addEventListener("click", async () => {
+    try {
+      await video.play();
+    } catch (error) {
+      console.error("Unable to play video:", error);
+    }
+  });
+
+  // Video starts
+  video.addEventListener("play", () => {
+    videoContainer.classList.add("is-playing");
+  });
+
+  // Video pauses
+  video.addEventListener("pause", () => {
+    videoContainer.classList.remove("is-playing");
+  });
+
+  // Video ends
+  video.addEventListener("ended", () => {
+    videoContainer.classList.remove("is-playing");
+  });
+
+});
+</script>
+ 
+  </main>
+
+  <footer class="clh-footer">
+    <div class="wrap">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="./index.html#home" class="footer-logo" aria-label="CaabiLearnHub Home">
+            <img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'">
+            <span>Caabi<i>LearnHub</i></span>
+          </a>
+          <p>Goob waxbarasho oo diiradda saarta Programming iyo Artificial Intelligence, kuna baraysa Af-Soomaali.</p>
+          <div class="footer-tagline"><span>Learn</span><b>•</b><span>Build</span><b>•</b><span class="mint">Grow</span></div>
+        </div>
+
+        <nav class="footer-column" aria-label="Explore">
+          <h4>Explore</h4>
+          <a href="./index.html#home">Home <span>↗</span></a>
+          <a href="./index.html#courses">Courses <span>↗</span></a>
+          <a href="./About.html">About Us <span>↗</span></a>
+          <a href="./index.html#video-showcase">Platform Tour <span>↗</span></a>
+        </nav>
+
+        <nav class="footer-column" aria-label="Learning">
+          <h4>Learning</h4>
+          <a href="./courses.html">All Courses <span>↗</span></a>
+          <a href="./courses.html?f=prog">Programming <span>↗</span></a>
+          <a href="./courses.html?f=ai">Artificial Intelligence <span>↗</span></a>
+        </nav>
+
+        <nav class="footer-column" aria-label="Account">
+          <h4>Account</h4>
+          <a href="./login.html">Login <span>↗</span></a>
+          <a href="./signup.html">Create Account <span>↗</span></a>
+          <a href="mailto:hello@caabilearnhub.com">Email Us <span>↗</span></a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="yr">2026</span> <strong>CaabiLearnHub.</strong> All rights reserved.</p>
+        <div class="footer-social">
+          <span class="follow-text">Follow us</span>
+          <a href="https://www.youtube.com/@caabilearnhub" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.900.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.800a3 3 0 0 0 2.100 2.100c1.900.5 8.900.5 8.900.5s7 0 8.900-.5a3 3 0 0 0 2.100-2.100c.4-1.600.5-3.200.5-4.800s-.1-3.200-.5-4.800zM9.800 15.200V8.800l5.800 3.200-5.800 3.200z" /></svg>
+          </a>
+          <a href="https://x.com/SuhaibMohav8aw" target="_blank" rel="noopener noreferrer" aria-label="X" title="X / Twitter">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.200 2.300h3.300l-7.200 8.300 8.500 11.200h-6.700l-5.200-6.800-6 6.800H1.600l7.700-8.800L1.200 2.300H8l4.700 6.200 5.500-6.200zm-1.200 17.500h1.800L7.100 4.200H5.200L17 19.800z" /></svg>
+          </a>
+          <a href="https://wa.me/252907071342" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp" class="whatsapp-link">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.500 15.200L2 22l4.900-1.500A10 10 0 1 0 12 2zm5.800 14.200c-.2.700-1.400 1.300-2 1.400-.5.100-1.200.100-1.900-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.100 1-2.400c.3-.3.600-.4.800-.4h.6c.2 0 .4 0 .6.500l.8 2c.1.2.1.400 0 .5l-.3.500-.4.400c-.1.200-.3.300-.1.600.2.300.7 1.200 1.500 1.900 1 .9 1.900 1.200 2.200 1.300.3.100.4.100.6-.1l.8-1c.2-.3.400-.2.600-.1l1.900.9c.3.100.5.200.5.300.1.200.1.800-.1 1.400z" /></svg>
+            WhatsApp
+          </a>
+          <button type="button" class="to-top" id="toTop" aria-label="Ku laabo dhanka sare" title="Top">↑</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-mark" aria-hidden="true">CaabiLearnHub</div>
+  </footer>
+
+  <script>
+    const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hd = $("#hd"), prog = $("#prog");
+    function onScroll() { hd.classList.toggle("s", scrollY > 20); const h = document.documentElement.scrollHeight - innerHeight; prog.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})` }
+    addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+    const bg = $("#bg"), links = $("#links");
+    function menu(o) { links.classList.toggle("open", o); bg.classList.toggle("x", o); document.body.classList.toggle("lock", o); bg.setAttribute("aria-expanded", o); bg.setAttribute("aria-label", o ? "Close navigation menu" : "Open navigation menu") }
+    bg.onclick = () => menu(!links.classList.contains("open"));
+    $$("#links a").forEach(a => a.onclick = () => menu(false));
+    addEventListener("keydown", e => e.key === "Escape" && menu(false));
+
+    /* reveal on scroll */
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target) } }), { threshold: .15 });
+    $$(".rv").forEach((el, i) => { el.style.transitionDelay = (i % 3) * .08 + "s"; io.observe(el) });
+
+
+    $("#toTop").onclick = () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    $("#yr").textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>

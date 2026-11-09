@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#04211C">
+<meta name="description" content="Baro HTML5 laga bilaabo eber: elements, forms, semantic HTML, sawirro, audio iyo video. 39 cashar, 5h 39m. CaabiLearnHub.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HTML5 for Beginners: Build Your First Web Pages | CaabiLearnHub">
+<meta property="og:description" content="Learn HTML5 from scratch and build your first web pages step by step.">
+<meta property="og:image" content="./Images/HTML COURSE CHAT.png">
+<title>HTML5 for Beginners: Build Your First Web Pages | CaabiLearnHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="./CaabiLearnHub Modern Logo-Photoroom.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04211C;--bg2:#073029;--card:#0A3B32;--mint:#2FE0A8;--sand:#F4EBD6;--muted:#9DBBB1;--sun:#FFC857;--line:rgba(244,235,214,.13);--r:20px;--w:1140px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--sand);font:400 1rem/1.7 Inter,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-width:100%}[hidden]{display:none!important}
+.wrap{width:min(var(--w),calc(100% - 40px));margin-inline:auto}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;line-height:1.05;letter-spacing:-.035em}
+.mint{color:var(--mint)}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 24px;border-radius:14px;font:600 .92rem Inter,sans-serif;border:1px solid transparent;background:none;color:var(--sand);cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s,color .25s}
+.btn.p{background:var(--mint);color:#02251C;box-shadow:0 10px 30px rgba(47,224,168,.25)}
+.btn.p:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(47,224,168,.4)}
+.btn.o{border-color:var(--line)}.btn.o:hover{border-color:var(--mint);color:var(--mint)}
+.btn.sm{min-height:40px;padding:0 16px;font-size:.82rem}
+
+#prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--mint),var(--sun));z-index:2000}
+header{position:fixed;inset:0 0 auto;height:76px;z-index:1000;transition:.3s;backdrop-filter:blur(16px);background:rgba(4,33,28,.55)}
+header.s{height:66px;background:rgba(4,33,28,.92);border-bottom:1px solid var(--line)}
+.nav{height:100%;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font:800 1.25rem "Bricolage Grotesque",sans-serif;letter-spacing:-.04em}
+.brand img{width:40px;height:40px;object-fit:contain}.brand i{font-style:normal;color:var(--mint)}
+.links{display:flex;gap:28px;margin-left:auto}
+.links a{font-size:.88rem;font-weight:500;color:var(--muted);position:relative;padding:4px 0;transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:100%;background:var(--mint);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover,.links a.on{color:var(--sand)}.links a:hover::after,.links a.on::after{transform:scaleX(1)}
+.acts{display:flex;align-items:center;gap:14px}.acts .login{font-size:.88rem;font-weight:600}
+.acts .btn{min-height:42px;padding:0 18px;font-size:.84rem}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--sand);cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;transition:.25s}
+.burger.x span:nth-child(1){transform:translateY(6px) rotate(45deg)}.burger.x span:nth-child(2){opacity:0}.burger.x span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* hero */
+.ph{padding:140px 0 60px;position:relative;overflow:hidden}
+.ph::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 70% 0,#000,transparent 70%);opacity:.5}
+.hero2{position:relative;display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:start}
+.crumb{color:var(--muted);font-size:.84rem}.crumb a:hover{color:var(--mint)}
+.hero2 h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;margin:14px 0;animation:fade .9s both}
+.lead{color:var(--muted);max-width:580px;animation:fade .9s .15s both}
+@keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tags span{padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--bg2);font-size:.8rem;font-weight:500}
+.who{display:flex;align-items:center;gap:12px;margin:24px 0 0}
+.who small{display:block;color:var(--muted);font-size:.75rem;line-height:1.2}.who b{font-weight:600}
+.av{position:relative;flex:none;width:46px;height:46px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--bg2);border:2px solid var(--mint);color:var(--mint);font:800 1rem "Bricolage Grotesque",sans-serif}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hstats{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+.hstats div{padding:12px 20px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.hstats b{display:block;font:800 1.5rem "Bricolage Grotesque",sans-serif;color:var(--mint);letter-spacing:-.04em;line-height:1.1}
+.hstats span{color:var(--muted);font-size:.8rem}
+.enroll{background:var(--card);border:1px solid var(--line);border-radius:28px;overflow:hidden;animation:fade .9s .25s both}
+video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#02130f}
+.now{display:flex;align-items:center;gap:9px;padding:12px 22px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.82rem}
+.now::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(47,224,168,.2)}
+.bb{display:grid;gap:14px}.enroll .bb{padding:24px}.bb .btn{width:100%}
+.pp{font:800 2.8rem "Bricolage Grotesque",sans-serif;letter-spacing:-.05em;line-height:1}
+.pp s{font:400 1rem Inter,sans-serif;color:var(--muted);margin-left:10px;letter-spacing:0}
+.note{color:var(--muted);font-size:.8rem}
+.pp.free{color:var(--mint)}
+.tag.soon{background:rgba(157,187,177,.12);color:var(--muted)}
+
+/* body */
+.layout{display:grid;grid-template-columns:1fr 340px;gap:44px;padding:40px 0 90px}
+.content>section+section{margin-top:56px}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:18px}
+.side{position:sticky;top:92px;align-self:start;display:grid;gap:20px}.side h2{font-size:1.4rem;margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:26px;position:relative;overflow:hidden}
+.chk{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.chk.one{grid-template-columns:1fr}
+.chk div{position:relative;padding:18px 20px 18px 54px;border:1px solid var(--line);border-radius:16px;background:var(--bg2);font-size:.92rem}
+.chk div::before{content:"✓";position:absolute;left:18px;top:16px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--mint);color:#02251C;font-weight:800;font-size:.8rem}
+.panel .chk div{padding:12px 14px 12px 46px;font-size:.88rem}.panel .chk div::before{left:12px;top:11px;width:24px;height:24px}
+.for{color:var(--muted);margin-bottom:16px}.for b{color:var(--sand);font-weight:600}
+.cur-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:20px}.cur-head h2{margin:0}
+.cur-ctl{display:flex;gap:8px}
+#curriculum{counter-reset:md}
+.acc{background:var(--bg2);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:border-color .25s;counter-increment:md}
+.acc:has([aria-expanded=true]){border-color:rgba(47,224,168,.5)}
+.ab{width:100%;display:flex;align-items:center;gap:14px;padding:16px 20px;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.ab::before{content:counter(md,decimal-leading-zero);flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--mint);color:#02251C;font:800 .85rem "Bricolage Grotesque",sans-serif}
+.acc:nth-child(n+8) .ab::before{background:var(--sun);color:#2b2000}
+.ab b{flex:1;font:700 1.05rem "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+.ab small{color:var(--muted);font-size:.78rem;white-space:nowrap}
+.ab::after{content:"+";color:var(--mint);font-size:1.4rem;transition:transform .25s}
+.ab[aria-expanded=true]::after{transform:rotate(45deg)}
+.ls{width:100%;display:flex;align-items:center;gap:14px;padding:13px 20px;border:0;border-top:1px solid var(--line);background:none;color:var(--muted);font:inherit;font-size:.9rem;text-align:left;cursor:not-allowed}
+.ls.free{color:var(--sand);cursor:pointer}.ls.free:hover{background:rgba(47,224,168,.07)}
+.ls .n{width:24px;font-size:.75rem;font-weight:700}.ls.free .n{color:var(--mint)}
+.ls .t{flex:1}
+.tag{padding:3px 10px;border-radius:99px;background:rgba(47,224,168,.13);color:var(--mint);font-size:.7rem;font-weight:700;white-space:nowrap}
+.dur{min-width:30px;font-size:.75rem;text-align:right}
+
+/* course + instructor */
+.lbl{color:var(--mint);font-size:.78rem;font-weight:600}
+.ci h3{font-size:1.8rem;margin:6px 0 10px}.ci>p{color:var(--muted);max-width:620px}
+.inst{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center;margin-top:26px;padding-top:26px;border-top:1px solid var(--line)}
+.fphoto{aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#0E5445,#073029);border:1px solid var(--line)}
+.fphoto img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(1);transition:filter .35s}.fphoto:hover img{filter:grayscale(.15)}
+.frole{color:var(--mint);font-weight:600;margin-bottom:10px}.inst p{color:var(--muted)}.inst .btn{margin-top:20px}
+.req{display:flex;align-items:center;gap:14px;margin-top:26px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.req .ic{flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(47,224,168,.13);font-size:1.2rem}
+.req small{display:block;color:var(--muted);font-size:.82rem}
+
+.toast{position:fixed;left:50%;bottom:24px;z-index:2100;max-width:min(520px,92vw);padding:14px 18px;border-radius:14px;background:var(--mint);color:#02251C;font-size:.9rem;font-weight:600;box-shadow:0 20px 50px rgba(0,0,0,.4);transform:translate(-50%,140px);transition:transform .3s}.toast.show{transform:translate(-50%,0)}
+
+/* footer */
+.clh-footer{position:relative;overflow:hidden;padding:88px 0 0;background:radial-gradient(circle at 5% 0,rgba(47,224,168,.13),transparent 32%),linear-gradient(145deg,#031b17,#04110f 65%,#061c17)}
+.clh-footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--mint),var(--sun),transparent);background-size:200% 100%;animation:sheen 6s linear infinite}
+@keyframes sheen{to{background-position:200% 0}}
+.footer-main{position:relative;z-index:1;display:grid;grid-template-columns:1.7fr 1fr 1.2fr 1fr;gap:55px;padding-bottom:64px}
+.footer-logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:22px}.footer-logo img{width:44px;height:44px;object-fit:contain}
+.footer-logo span{font:800 1.6rem "Bricolage Grotesque",sans-serif;letter-spacing:-.04em}.footer-logo i{color:var(--mint);font-style:normal}
+.footer-brand p{max-width:330px;color:var(--muted);font-size:.9rem;line-height:1.9}
+.footer-tagline{display:inline-flex;gap:12px;margin-top:26px;padding:9px 16px;border:1px solid var(--line);border-radius:99px;font-size:.8rem;font-weight:600;letter-spacing:.06em}
+.footer-tagline b,.footer-tagline .mint{color:var(--mint)}
+.footer-column{display:flex;flex-direction:column;gap:16px}
+.footer-column h4{font:800 1rem "Bricolage Grotesque",sans-serif;margin:4px 0 8px}
+.footer-column h4::after{content:"";display:block;width:26px;height:2px;margin-top:12px;border-radius:5px;background:var(--mint);transition:width .4s}.footer-column:hover h4::after{width:52px}
+.footer-column a{width:fit-content;color:var(--muted);font-size:.86rem;transition:color .25s,transform .25s}.footer-column a:hover{color:var(--mint);transform:translateX(5px)}
+.footer-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:22px;padding:24px 0;border-top:1px solid var(--line)}
+.footer-bottom p{color:var(--muted);font-size:.8rem}.footer-bottom strong{color:var(--sand)}
+.footer-social{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.follow-text{color:var(--mint);font-size:.82rem;font-weight:600;margin-right:6px}
+.footer-social a,.to-top{display:flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:rgba(244,235,214,.04);color:var(--sand);font:600 .8rem Inter,sans-serif;cursor:pointer;transition:transform .3s,background .3s,color .3s}
+.footer-social a:hover,.to-top:hover{color:#02251C;background:var(--mint);border-color:var(--mint);transform:translateY(-4px)}
+.footer-mark{text-align:center;white-space:nowrap;font:800 clamp(3rem,13.5vw,12rem)/.8 "Bricolage Grotesque",sans-serif;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(47,224,168,.22);-webkit-mask-image:linear-gradient(#000 25%,transparent 95%);mask-image:linear-gradient(#000 25%,transparent 95%);padding-bottom:6px;user-select:none}
+
+@media(max-width:1000px){.hero2,.layout{grid-template-columns:1fr}.side{position:static}.footer-main{grid-template-columns:1.5fr 1fr;gap:44px 34px}}
+@media(max-width:900px){
+.burger{display:block;order:3}.acts{margin-left:auto}.acts .login{display:none}
+.links{display:none;position:fixed;top:66px;left:0;right:0;flex-direction:column;gap:0;padding:14px 20px 24px;background:rgba(4,33,28,.98);border-bottom:1px solid var(--line);margin:0}
+.links.open{display:flex}.links a{padding:14px 0;border-bottom:1px solid var(--line)}
+.inst{grid-template-columns:1fr}.fphoto{max-width:240px}}
+@media(max-width:560px){.ph{padding-top:120px}.chk{grid-template-columns:1fr}.ab small{display:none}.ls{padding:13px 14px;gap:10px}
+.clh-footer{padding-top:60px}.footer-main{grid-template-columns:1fr 1fr;gap:38px 20px;padding-bottom:44px}.footer-brand{grid-column:1/-1}
+.footer-bottom{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<header id="hd">
+  <div class="wrap nav">
+    <a href="HOME PAGE.HTML" class="brand" aria-label="CaabiLearnHub Home"><img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+    <nav class="links" id="links" aria-label="Main navigation">
+      <a href="HOME PAGE.HTML">Home</a><a href="./courses.html" class="on" aria-current="page">Courses</a><a href="Mentorship.html">Mentorship</a><a href="./About.html">About Us</a><a href="./Contact.html">Contact</a>
+    </nav>
+    <div class="acts"><a href="./login.html" class="login">Login</a><a href="./signup.html" class="btn p">Get Started ↗</a></div>
+    <button class="burger" id="bg" aria-label="Open navigation menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+  <section class="ph">
+    <div class="wrap hero2">
+      <div>
+        <nav class="crumb" aria-label="Breadcrumb"><a href="HOME PAGE.HTML">Home</a> › <a href="./courses.html">Courses</a> › <span>HTML5 for Beginners</span></nav>
+        <h1>HTML5 for Beginners: <span class="mint">Build Your First Web Pages</span></h1>
+        <p class="lead">Learn HTML5 from scratch and build your first web pages step by step. Master HTML elements, headings, paragraphs, links, images, lists, tables, forms, semantic HTML, and page structure while practicing with real-world projects.</p>
+        <div class="tags"><span>Web Development</span><span>Beginner-friendly</span><span>100% Free</span></div>
+        <div class="who"><span class="av">S<img src="./Images/Image Founder Suhayb black and White.jpeg" alt="" onerror="this.remove()"></span><div><small>Macalin</small><b>Suhayb Mohamed</b></div></div>
+        <div class="hstats">
+          <div><b data-lessons>39</b><span>Lessons</span></div>
+          <div><b data-dur>5h 39m</b><span>Duration</span></div>
+          <div><b data-sections>9</b><span>Sections</span></div>
+          <div><b>Beginner</b><span>Level</span></div>
+        </div>
+      </div>
+      <aside class="enroll">
+        <video id="player" controls preload="metadata" playsinline poster="./Images/HTML COURSE CHAT.png" src="./Images/HTML Course vidoe.mp4">Browser-kaagu video ma taageerayo.</video>
+        <p class="now" id="now" role="status">Hadda: Course Introduction</p>
+        <div class="bb" data-buybox></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="wrap layout">
+    <div class="content">
+      <section aria-labelledby="t-learn"><h2 id="t-learn">What You’ll <span class="mint">Learn</span></h2><div class="chk" data-list="LEARN"></div></section>
+
+      <section aria-labelledby="t-for"><h2 id="t-for">Is This Course for You?</h2>
+        <p class="for">Kooraskan waxaa loogu talagalay ardayda <b>bilowga ah</b>. Uma baahnid khibrad hore oo coding ah. Waxaad u baahan tahay kaliya:</p>
+        <div class="chk one" data-list="PREREQ"></div></section>
+
+      <section aria-labelledby="t-cur">
+        <div class="cur-head">
+          <div><h2 id="t-cur">Course Curriculum</h2><p class="note"><span data-sections>9</span> sections • <span data-lessons>39</span> lessons • <span data-dur>5h 39m</span></p></div>
+          <div class="cur-ctl"><button class="btn o sm" type="button" id="expandAll">Expand All</button><button class="btn o sm" type="button" id="collapseAll">Collapse All</button></div>
+        </div>
+        <div id="curriculum"></div>
+      </section>
+
+      <section aria-labelledby="t-ci"><h2 id="t-ci">Course &amp; Instructor</h2>
+        <div class="panel ci">
+          <span class="lbl">About the course</span>
+          <h3>HTML5 for Beginners</h3>
+          <p>Bilow safarkaaga Web Development adigoo baranaya HTML5, laga bilaabo aasaaska ilaa samaynta bogag web oo habaysan.</p>
+          <div class="tags"><span>HTML Fundamentals</span><span>Accessibility</span><span>Practical Projects</span></div>
+          <div class="inst">
+            <div class="fphoto"><img src="./Images/Image Founder Suhayb black and White.jpeg" alt="Suhayb Mohamed, instructor at CaabiLearnHub" loading="lazy" onerror="this.style.display='none'"></div>
+            <div>
+              <span class="lbl">Meet your instructor</span>
+              <h3>Suhayb Mohamed</h3>
+              <p class="frole">Instructor · Software Engineer</p>
+              <p>Baro xirfadaha Web Development adigoo raacaya casharro tallaabo-tallaabo ah iyo tusaalooyin wax ku ool ah.</p>
+              <div class="hstats"><div><b>07</b><span>Courses</span></div><div><b>150+</b><span>Students</span></div></div>
+              <a href="./About.html" class="btn p">View Instructor Profile ↗</a>
+            </div>
+          </div>
+          <div class="req"><span class="ic">💻</span><div><b>Waxyaabaha loo baahan yahay</b><small>Computer, Browser iyo Visual Studio Code</small></div></div>
+        </div></section>
+    </div>
+
+    <aside class="side">
+      <section class="panel" aria-labelledby="t-inc"><h2 id="t-inc">What’s Included</h2><div class="chk one" data-list="INCLUDED"></div></section>
+      <section class="panel" id="enroll" aria-labelledby="t-price"><h2 id="t-price">Start for Free</h2><div class="bb" data-buybox></div></section>
+    </aside>
+  </div>
+</main>
+
+<footer class="clh-footer">
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="./index.html#home" class="footer-logo" aria-label="CaabiLearnHub Home"><img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+        <p>Goob waxbarasho oo diiradda saarta Programming iyo Artificial Intelligence, kuna baraysa Af-Soomaali.</p>
+        <div class="footer-tagline"><span>Learn</span><b>•</b><span>Build</span><b>•</b><span class="mint">Grow</span></div>
+      </div>
+      <nav class="footer-column" aria-label="Explore"><h4>Explore</h4><a href="./index.html#home">Home</a><a href="./index.html#courses">Courses</a><a href="Mentorship.html">Mentorship</a><a href="./About.html">About Us</a></nav>
+      <nav class="footer-column" aria-label="Learning"><h4>Learning</h4><a href="./courses.html">All Courses</a><a href="./courses.html?f=prog">Programming</a><a href="./courses.html?f=ai">Artificial Intelligence</a></nav>
+      <nav class="footer-column" aria-label="Account"><h4>Account</h4><a href="./login.html">Login</a><a href="./signup.html">Create Account</a><a href="mailto:hello@caabilearnhub.com">Email Us</a></nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="yr">2026</span> <strong>CaabiLearnHub.</strong> All rights reserved.</p>
+      <div class="footer-social"><span class="follow-text">Follow us</span>
+        <a href="https://www.youtube.com/@caabilearnhub" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://x.com/SuhaibMohav8aw" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://wa.me/252907071342" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <button type="button" class="to-top" id="toTop" aria-label="Ku laabo dhanka sare">↑</button></div>
+    </div>
+  </div>
+  <div class="footer-mark" aria-hidden="true">CaabiLearnHub</div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(()=>{
+/* ===== COURSE DATA: halkan ka beddel qiimaha, casharrada iyo liiska ===== */
+const COURSE={price:"Free",start:"./signup.html"}; // koorsadan waa bilaash
+const PREVIEW="./Images/HTML Course vidoe.mp4";
+const LEARN=["Build web pages from scratch with HTML5","Use headings, paragraphs, links, images and lists","Create tables and forms that collect user input","Structure pages with semantic HTML","Add audio and video to your pages","Understand accessibility and SEO basics","Set up Visual Studio Code and a clean workflow","Finish with a real project you can show"];
+const PREREQ=["Computer (Windows, Mac ama Linux)","Browser casri ah (Chrome, Edge ama Firefox)","Visual Studio Code (bilaash)","Diyaar u ahaansho inaad layliyo kasta samayso"];
+const INCLUDED=["5h 39m oo casharro muuqaal ah","39 cashar oo ku kala jira 9 qaybood","Koorsadan oo dhan waa bilaash, lacag la'aan","Layliyo iyo mashruuc dhammaad ah","Casharro Af-Soomaali ah"];
+// [cinwaanka, daqiiqado, (haddii bilaash yahay) video src]
+const CUR=[
+["Getting Started",[["Course Introduction",1,PREVIEW],["The evolution of the Internet and how it differs from the World Wide Web?",6,"./Images/HTML COURE 1.mp4"],["How the Web Works",3,"./Images/Lesson 2 HTml.mp4"],["Your First Web Page",10]]],
+["HTML Basics",[["Document Structure",9],["Headings and Paragraphs",8],["Text Formatting",7],["Comments and Whitespace",5],["Practice: Bio Page",10]]],
+["Links and Images",[["Links and Navigation",10],["Images and Alt Text",9],["File Paths",8],["Practice: Photo Page",8]]],
+["Lists and Tables",[["Ordered and Unordered Lists",7],["Nested Lists",6],["Building Tables",10],["Table Structure and Spans",8],["Practice: Schedule Table",9]]],
+["Forms",[["Form Basics",10],["Input Types",11],["Labels, Select and Textarea",10],["Form Validation",9]]],
+["Semantic HTML",[["Why Semantics Matter",7],["Header, Nav and Main",9],["Section, Article and Aside",8],["Footer and Page Layout",7],["Practice: Blog Layout",12]]],
+["Audio, Video and Media",[["Audio Element",8],["Video Element",9],["iframe Embeds",7],["Responsive Images",8]]],
+["Accessibility and SEO",[["Accessibility Basics",10],["Meta Tags and SEO",9],["Favicons and Open Graph",7],["Validating Your HTML",6]]],
+["Final Project",[["Project Planning",8],["Build the Structure",15],["Add Forms and Media",14],["Review and Next Steps",8]]]];
+
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const fmt=m=>m>=60?`${Math.floor(m/60)}h ${m%60}m`:`${m}m`;
+const player=$("#player"),now=$("#now"),toastEl=$("#toast");
+let timer;const toast=m=>{toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toastEl.classList.remove("show"),3200)};
+
+const lists={LEARN,PREREQ,INCLUDED};
+$$("[data-list]").forEach(el=>el.innerHTML=lists[el.dataset.list].map(t=>`<div>${t}</div>`).join(""));
+$$("[data-buybox]").forEach(b=>b.innerHTML=`<div class="pp free">${COURSE.price}<s>Lacag la'aan</s></div>
+<button class="btn p" type="button" data-preview>Bilow Casharka ↗</button><a class="btn o" href="${COURSE.start}">Samee akoon</a>
+<p class="note">Koorsadan waa bilaash. Casharro Af-Soomaali ah oo laga daawan karo mobile iyo computer.</p>`);
+
+let n=0,total=0;
+$("#curriculum").innerHTML=CUR.map(([title,ls],i)=>{
+  const mins=ls.reduce((a,l)=>a+l[1],0);total+=mins;
+  return `<div class="acc"><button class="ab" type="button" aria-expanded="${i===0}" aria-controls="sec${i}"><b>${title}</b><small>${ls.length} lessons • ${fmt(mins)}</small></button>
+<div id="sec${i}" ${i?"hidden":""}>${ls.map(([t,m,src])=>`<button class="ls free" type="button" data-title="${t}" ${src?`data-src="${src}"`:""}><span class="n">${String(++n).padStart(2,"0")}</span><span class="t">${t}</span><span class="tag${src?"":" soon"}">${src?"Free":"Dhawaan"}</span><span class="dur">${m}m</span></button>`).join("")}</div></div>`;
+}).join("");
+$$("[data-lessons]").forEach(e=>e.textContent=n);
+$$("[data-sections]").forEach(e=>e.textContent=CUR.length);
+$$("[data-dur]").forEach(e=>e.textContent=fmt(total));
+
+const playLesson=(title,src)=>{
+  if(src&&player.getAttribute("src")!==src)player.src=src;
+  now.textContent=`Hadda: ${title}`;
+  player.scrollIntoView({behavior:"smooth",block:"center"});player.play().catch(()=>{});
+};
+const setAll=o=>$$(".ab").forEach(b=>{b.setAttribute("aria-expanded",String(o));$("#"+b.getAttribute("aria-controls")).hidden=!o});
+$("#curriculum").addEventListener("click",e=>{
+  const h=e.target.closest(".ab");
+  if(h){const o=h.getAttribute("aria-expanded")==="true";h.setAttribute("aria-expanded",String(!o));$("#"+h.getAttribute("aria-controls")).hidden=o;return}
+  const l=e.target.closest(".ls");if(!l)return;
+  l.dataset.src?playLesson(l.dataset.title,l.dataset.src):toast("Muuqaalka casharkan dhawaan ayaa la soo gelinayaa.");
+});
+$("#expandAll").onclick=()=>setAll(true);$("#collapseAll").onclick=()=>setAll(false);
+document.addEventListener("click",e=>{if(e.target.closest("[data-preview]"))playLesson(CUR[0][1][0][0],PREVIEW)});
+
+/* header, progress, menu */
+const hd=$("#hd"),prog=$("#prog"),bg=$("#bg"),links=$("#links");
+const onScroll=()=>{hd.classList.toggle("s",scrollY>20);const h=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${h>0?scrollY/h:0})`};
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+const menu=o=>{links.classList.toggle("open",o);bg.classList.toggle("x",o);document.body.classList.toggle("lock",o);bg.setAttribute("aria-expanded",o);bg.setAttribute("aria-label",o?"Close navigation menu":"Open navigation menu")};
+bg.onclick=()=>menu(!links.classList.contains("open"));
+$$("#links a").forEach(a=>a.onclick=()=>menu(false));
+addEventListener("keydown",e=>e.key==="Escape"&&menu(false));
+$("#toTop").onclick=()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+$("#yr").textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

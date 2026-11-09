@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#061014">
+  <meta name="robots" content="noindex">
+  <title>Bixi Lacagta | CaabiLearnHub</title>
+  <link rel="icon" type="image/png" href="./cropped_circle_image%20(3).png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link icon rel="shortcut icon" href="./CaabiLearnHub Modern Logo-Photoroom.png" type="image/x-icon">
+
+  <style>
+    :root {
+      --bg:#061014; --surface:#0a171c; --panel:#08141a; --accent:#00c896; --mint:#9cf5db;
+      --text:#f5fafc; --muted:#a3b6c0; --faint:#8197a0; --line:#1b3036; --line-strong:#2a4148;
+      --font:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { -webkit-text-size-adjust:100%; }
+    body {
+      min-height:100vh; display:grid; place-items:center; padding:40px 16px;
+      font-family:var(--font); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(55% 45% at 10% 0%,rgba(0,200,150,.14),transparent 70%),
+        radial-gradient(50% 45% at 100% 100%,rgba(6,50,75,.55),transparent 70%),
+        var(--bg);
+    }
+    a { color:inherit; text-decoration:none; }
+    :focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:10px; }
+
+    .wrapper { width:100%; max-width:540px; }
+    .card {
+      padding:36px 32px; border:1px solid var(--line-strong); border-radius:24px;
+      background:linear-gradient(165deg,#0c1f28,var(--surface) 55%);
+      box-shadow:0 30px 70px -30px rgba(0,200,150,.28),0 18px 44px rgba(0,0,0,.45);
+    }
+
+    /* Header */
+    .head { text-align:center; margin-bottom:26px; }
+    .logo { width:72px; height:72px; margin:0 auto 18px; overflow:hidden; border-radius:50%; border:2px solid rgba(0,200,150,.4); box-shadow:0 0 0 6px rgba(0,200,150,.08); }
+    .logo img { width:100%; height:100%; display:block; object-fit:cover; }
+    h1 { margin-bottom:10px; font-size:clamp(28px,6vw,34px); font-weight:800; line-height:1.15; letter-spacing:-.03em; }
+    .lead { max-width:30em; margin:auto; color:var(--muted); font-size:15px; }
+    .lead strong { color:var(--text); }
+
+    /* Receipt: amount + number joined as one ticket */
+    .ticket { border:1px solid var(--line-strong); border-radius:18px; background:var(--panel); overflow:hidden; }
+    .ticket-top { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 20px; }
+    .amount-label { color:var(--faint); font-size:13px; }
+    .amount-course { margin-top:2px; font-size:15px; font-weight:600; line-height:1.4; }
+    .amount { color:var(--accent); font-size:34px; font-weight:800; letter-spacing:-.03em; line-height:1; white-space:nowrap; }
+
+    .ticket-cut { position:relative; height:0; border-top:2px dashed var(--line-strong); }
+    .ticket-cut::before,.ticket-cut::after { content:""; position:absolute; top:-11px; width:20px; height:20px; border-radius:50%; background:var(--surface); border:1px solid var(--line-strong); }
+    .ticket-cut::before { left:-11px; clip-path:inset(0 0 0 50%); }
+    .ticket-cut::after { right:-11px; clip-path:inset(0 50% 0 0); }
+
+    .ticket-bottom { padding:20px; background:linear-gradient(145deg,rgba(0,200,150,.12),rgba(0,200,150,.03)); }
+    .number-label { display:block; margin-bottom:8px; color:var(--muted); font-size:13px; font-weight:500; }
+    .number-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .phone-number { color:var(--mint); font-size:clamp(30px,8vw,40px); font-weight:800; letter-spacing:.04em; font-variant-numeric:tabular-nums; line-height:1.1; }
+    .copy-btn { min-height:44px; padding:0 20px; border:1px solid var(--accent); border-radius:12px; background:var(--accent); color:#03261e; font:700 14px var(--font); cursor:pointer; transition:transform .2s,background .2s,color .2s; }
+    .copy-btn:hover { transform:translateY(-2px); background:var(--bg); color:var(--accent); }
+    .copy-btn.done { background:var(--mint); border-color:var(--mint); color:#03261e; }
+    .who { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:12px; color:var(--text); font-size:14px; font-weight:500; }
+    .method { padding:3px 10px; border-radius:50px; background:rgba(0,200,150,.18); color:var(--mint); font-size:12px; font-weight:700; }
+
+    /* Steps: a real sequence, joined by a line */
+    .steps-title { margin:30px 0 16px; font-size:17px; font-weight:700; letter-spacing:-.01em; }
+    .steps { list-style:none; position:relative; display:grid; gap:18px; }
+    .steps::before { content:""; position:absolute; left:15px; top:16px; bottom:16px; width:2px; background:linear-gradient(var(--accent),rgba(0,200,150,.1)); }
+    .step { position:relative; display:flex; align-items:flex-start; gap:16px; }
+    .step-number { flex:none; z-index:1; width:32px; height:32px; display:grid; place-items:center; border-radius:50%; background:var(--accent); color:#03261e; font-size:13px; font-weight:800; box-shadow:0 0 0 5px var(--surface); }
+    .step strong { display:block; margin-bottom:2px; font-size:15px; }
+    .step span { color:var(--muted); font-size:14px; line-height:1.6; }
+    .step b { color:var(--text); }
+
+    /* Notice + actions */
+    .notice { margin-top:26px; padding:14px 16px; border-left:3px solid #ffc83d; border-radius:0 12px 12px 0; background:rgba(255,200,61,.07); color:var(--muted); font-size:13.5px; line-height:1.65; }
+    .notice strong { color:#ffd166; }
+    .actions { display:grid; gap:10px; margin-top:22px; }
+    .btn { min-height:50px; padding:0 22px; display:inline-flex; align-items:center; justify-content:center; gap:10px; border:1px solid transparent; border-radius:12px; font:700 15px var(--font); transition:transform .2s,background .2s,color .2s,border-color .2s; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn svg { width:20px; height:20px; flex:none; }
+    .btn-primary { background:var(--accent); border-color:var(--accent); color:#03261e; box-shadow:0 8px 26px rgba(0,200,150,.22); }
+    .btn-primary:hover { background:var(--bg); color:var(--accent); }
+    .btn-ghost { background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.16); color:var(--text); font-weight:600; }
+    .btn-ghost:hover { border-color:var(--accent); background:rgba(0,200,150,.07); }
+    .footer { margin-top:22px; color:var(--faint); font-size:12px; text-align:center; }
+
+    @media (max-width:520px) {
+      body { padding:20px 12px; }
+      .card { padding:28px 18px; border-radius:20px; }
+      .ticket-top { flex-direction:column; align-items:flex-start; gap:10px; }
+      .copy-btn { width:100%; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none !important; } }
+  </style>
+</head>
+
+<body>
+  <main class="wrapper">
+    <section class="card">
+
+      <div class="head">
+        <div class="logo"><img src="./CaabiLearnHub%20Modern%20Logo.png" alt="CaabiLearnHub Logo"></div>
+        <h1>Bixi lacagta course-ka</h1>
+        <p class="lead">Ku dir lacagta course-kaaga <strong>Sahal</strong>, kadib fariin ku soo dir WhatsApp si loo xaqiijiyo.</p>
+      </div>
+
+      <div class="ticket">
+        <div class="ticket-top">
+          <div>
+            <div class="amount-label">Course Payment</div>
+            <div class="amount-course">React Mastery Masterclass</div>
+          </div>
+          <div class="amount">$15.00</div>
+        </div>
+        <div class="ticket-cut"></div>
+        <div class="ticket-bottom">
+          <span class="number-label">Lacagta ku dir number-kan</span>
+          <div class="number-row">
+            <div class="phone-number" id="phoneNumber">907071342</div>
+            <button class="copy-btn" id="copyBtn" type="button" aria-live="polite">Copy</button>
+          </div>
+          <div class="who"><span class="method">Sahal</span>SuHaib Mohamed</div>
+        </div>
+      </div>
+
+      <h2 class="steps-title">Sida loo bixiyo</h2>
+      <ol class="steps">
+        <li class="step"><span class="step-number">1</span><div><strong>Ku dir lacagta Sahal</strong><span>U dir <b>$15.00</b> number-ka kor ku qoran: <b>907071342</b> (CaabiLearnHub).</span></div></li>
+        <li class="step"><span class="step-number">2</span><div><strong>Keydi caddaynta</strong><span>Qaado screenshot ama keydi fariinta xaqiijinta lacag-bixinta.</span></div></li>
+        <li class="step"><span class="step-number">3</span><div><strong>Fariin ku soo dir WhatsApp</strong><span>Marka lacagta la dhammeeyo, fariin ku soo dir WhatsApp <b>+252907071342</b> si course-ka laguu furo.</span></div></li>
+      </ol>
+
+      <div class="notice"><strong>Fiiro gaar ah:</strong> Hubi in number-ka iyo lacagta aad dirayso ay sax yihiin ka hor intaadan xaqiijin payment-ka.</div>
+
+      <div class="actions">
+        <a class="btn btn-primary" target="_blank" rel="noopener"
+           href="https://wa.me/252907071342?text=Salaam%2C%20waxaan%20bixiyay%20lacagta%20course-ka%20JavaScript%20(%2410.00).">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a12 12 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.200-3.400-8.300zM12 21.700c-1.800 0-3.600-.5-5.100-1.400l-.4-.2-3.800 1 1-3.700-.2-.4a9.800 9.800 0 0 1-1.500-5.200C2.100 6.500 6.500 2.100 12 2.100c2.600 0 5.100 1 6.900 2.900a9.700 9.700 0 0 1 2.900 6.900c0 5.400-4.400 9.800-9.800 9.800zm5.400-7.300c-.3-.1-1.800-.9-2-1-.3-.1-.5-.1-.7.100-.2.300-.8 1-.9 1.200-.2.200-.3.200-.6.100-.3-.1-1.200-.5-2.300-1.400-.9-.8-1.400-1.700-1.600-2-.2-.3 0-.5.100-.6l.4-.5c.1-.2.2-.3.300-.5.100-.2 0-.4 0-.5-.1-.1-.7-1.600-.9-2.200-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500.7.300 1.300.5 1.700.6.700.2 1.400.2 1.900.1.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400-.1-.1-.3-.2-.6-.3z"/></svg>
+          WhatsApp si aad u xaqiijiso lacag-bixinta
+        </a>
+        <a class="btn btn-ghost" href="./REA.html">Dib ugu noqo course-ka</a>
+      </div>
+
+    </section>
+
+    <div class="footer">© 2026 CaabiLearnHub · Learn. Build. Grow.</div>
+  </main>
+
+  <script>
+    (() => {
+      const btn = document.getElementById("copyBtn");
+      const number = document.getElementById("phoneNumber").textContent.trim();
+      let timer;
+
+      btn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(number);
+        } catch {
+          const t = document.createElement("textarea"); // fallback marka clipboard API la xiray
+          t.value = number; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove();
+        }
+        btn.textContent = "Waa la koobiyay ✓"; btn.classList.add("done");
+        clearTimeout(timer);
+        timer = setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1800);
+      });
+    })();
+  </script>
+</body>
+</html>

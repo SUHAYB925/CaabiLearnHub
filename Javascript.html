@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#04211C">
+<meta name="description" content="JavaScript Masterclass — Baro JavaScript Af-Soomaali: ES6+, DOM, APIs iyo asynchronous programming.">
+<title>JavaScript Masterclass: ES6+, DOM & Async | CaabiLearnHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="./CaabiLearnHub Modern Logo-Photoroom.png" type="image/png">
+<style>
+:root{--bg:#04211C;--bg2:#073029;--card:#0A3B32;--mint:#2FE0A8;--sand:#F4EBD6;--muted:#9DBBB1;--sun:#FFC857;--line:rgba(244,235,214,.12);--w:1160px;--r:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--sand);font:400 1rem/1.7 Inter,system-ui,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button{font:inherit;color:inherit}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;line-height:1.08;letter-spacing:-.035em}
+.wrap{width:min(var(--w),calc(100% - 40px));margin-inline:auto}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:99px;border:0;font-weight:700;font-size:.9rem;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--mint);color:#02251C;box-shadow:0 10px 30px rgba(47,224,168,.25)}
+.btn.outline{border:1px solid var(--line);background:rgba(244,235,214,.05)}
+.btn.outline:hover{border-color:var(--mint)}
+#prog{position:fixed;z-index:2000;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--mint),var(--sun));transform:scaleX(0);transform-origin:left}
+/* header */
+header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;background:rgba(4,33,28,.55);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+header.scrolled{height:64px;background:rgba(4,33,28,.94);border-color:var(--line)}
+.nav{height:100%;display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:10px;font:800 1.2rem "Bricolage Grotesque";letter-spacing:-.04em}
+.brand img{width:38px;height:38px;object-fit:contain}.brand i{font-style:normal;color:var(--mint)}
+.links{display:flex;gap:26px;margin-left:auto}
+.links a{position:relative;padding:4px 0;font-size:.88rem;font-weight:500;color:var(--muted);transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:2px;background:var(--mint);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover,.links a.active{color:var(--sand)}.links a:hover::after,.links a.active::after{transform:scaleX(1)}
+.nav-actions{display:flex;align-items:center;gap:16px}.login{font-size:.88rem;font-weight:600}
+.nav-actions .btn{min-height:40px;padding:0 18px;font-size:.83rem}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;transition:.25s}
+.burger.x span:nth-child(1){transform:translateY(6px) rotate(45deg)}.burger.x span:nth-child(2){opacity:0}.burger.x span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+/* hero */
+.hero{position:relative;padding:130px 0 70px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 420px at 85% 0,rgba(47,224,168,.18),transparent 65%),radial-gradient(500px 320px at 0 30%,rgba(255,200,87,.07),transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.3;mask-image:radial-gradient(ellipse at 70% 15%,#000,transparent 70%);pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:start}
+.crumb{font-size:.82rem;color:var(--muted);margin-bottom:22px}.crumb a:hover{color:var(--mint)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border:1px solid rgba(47,224,168,.28);border-radius:99px;background:rgba(47,224,168,.08);color:var(--mint);font-size:.78rem;font-weight:600}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+h1{font-size:clamp(2.8rem,6vw,5.4rem);font-weight:800;margin:20px 0 18px}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--mint),#9af5d6 60%,var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{max-width:600px;color:var(--muted);font-size:1.03rem;line-height:1.85}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}
+.chips span{padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(244,235,214,.04);font-size:.82rem;color:var(--muted)}
+.chips b{color:var(--sand);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+/* buy card */
+.buy{border:1px solid rgba(47,224,168,.22);border-radius:24px;background:linear-gradient(155deg,rgba(11,64,54,.95),rgba(7,42,36,.95));overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.35);position:sticky;top:90px}
+.art{position:relative;aspect-ratio:16/9;background:radial-gradient(circle at 75% 20%,rgba(47,224,168,.3),transparent 40%),linear-gradient(145deg,#0d5748,#062a24 70%)}
+.art img,.art iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.art img{object-fit:cover}
+.js-badge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:92px;height:92px;display:grid;place-items:end;padding:8px 11px;background:#f7df1e;color:#151515;border-radius:10px;font:800 2.9rem/1 "Bricolage Grotesque";letter-spacing:-.08em;opacity:.18}
+.play-btn{position:absolute;inset:0;display:grid;place-items:center;border:0;background:linear-gradient(to top,rgba(2,20,16,.65),transparent 60%);cursor:pointer;z-index:2}
+.play-btn span{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;padding-left:5px;background:var(--mint);color:#02251C;font-size:1.5rem;box-shadow:0 0 0 10px rgba(47,224,168,.18),0 14px 40px rgba(47,224,168,.4);transition:transform .25s}
+.play-btn:hover span{transform:scale(1.1)}
+.play-btn small{position:absolute;left:16px;bottom:14px;padding:7px 13px;border-radius:99px;background:rgba(4,33,28,.85);border:1px solid var(--line);font-size:.76rem;font-weight:600}
+.buy-body{padding:22px}
+.price-row{display:flex;align-items:center;gap:10px}
+.price{font:800 2.6rem "Bricolage Grotesque";color:var(--mint);line-height:1}
+.old{color:var(--muted);text-decoration:line-through}
+.save{margin-left:auto;padding:5px 11px;border-radius:99px;background:rgba(255,200,87,.13);color:var(--sun);font-size:.74rem;font-weight:700}
+.buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.includes{list-style:none;border-top:1px solid var(--line);padding-top:14px}
+.includes li{display:flex;gap:10px;padding:6px 0;font-size:.85rem;color:var(--muted)}.includes li::before{content:"✓";color:var(--mint);font-weight:800}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--r);background:rgba(244,235,214,.03);overflow:hidden}
+.stat{padding:22px 26px}.stat+.stat{border-left:1px solid var(--line)}
+.stat strong{display:block;font:800 1.8rem "Bricolage Grotesque";color:var(--mint)}.stat span{font-size:.8rem;color:var(--muted)}
+/* sections */
+.section{padding:90px 0}
+.head{max-width:660px;margin-bottom:38px}.head h2{font-size:clamp(2rem,4vw,3.2rem);margin-bottom:12px}.head p{color:var(--muted)}
+.head.center{margin-inline:auto;text-align:center}
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.cell{grid-column:span 2;padding:26px;border:1px solid var(--line);border-radius:var(--r);background:rgba(244,235,214,.03);transition:border-color .3s,transform .3s}
+.cell:hover{border-color:rgba(47,224,168,.4);transform:translateY(-4px)}
+.cell.big{grid-column:span 3;background:linear-gradient(150deg,rgba(47,224,168,.13),rgba(244,235,214,.02))}
+.cell .ic{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:rgba(47,224,168,.12);margin-bottom:18px;font-size:1.2rem}
+.cell h3{font-size:1.15rem;margin-bottom:8px}.cell p{font-size:.88rem;color:var(--muted)}
+/* curriculum */
+.cur-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:30px}
+.cur-head h2{font-size:clamp(2rem,4vw,3.2rem);margin-bottom:8px}.meta{color:var(--muted);font-size:.88rem}
+.expand{display:flex;align-items:center;gap:8px;padding:12px 18px;border:1px solid rgba(47,224,168,.3);border-radius:12px;background:rgba(47,224,168,.08);color:var(--mint);font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;transition:.25s}
+.expand:hover{background:var(--mint);color:#02251C}
+.modules{display:grid;gap:12px;max-width:960px}
+.module{border:1px solid var(--line);border-radius:18px;background:rgba(244,235,214,.03);overflow:hidden;transition:border-color .3s,background .3s}
+.module.open{border-color:rgba(47,224,168,.4);background:rgba(47,224,168,.04)}
+.m-head{width:100%;display:flex;align-items:center;gap:16px;padding:18px 22px;border:0;background:none;text-align:left;cursor:pointer}
+.m-num{width:42px;height:42px;display:grid;place-items:center;flex-shrink:0;border-radius:12px;background:rgba(47,224,168,.12);color:var(--mint);font-weight:800;font-size:.82rem}
+.m-title{flex:1;min-width:0}.m-title strong{display:block;font:700 1.05rem "Bricolage Grotesque"}.m-title small{color:var(--muted);font-size:.78rem}
+.m-arrow{width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:rgba(244,235,214,.06);color:var(--mint);font-size:1.3rem;transition:transform .3s}
+.module.open .m-arrow{transform:rotate(45deg)}
+.lessons{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s}
+.module.open .lessons{grid-template-rows:1fr}
+.lessons>div{overflow:hidden;padding:0 22px 0 80px}
+.module.open .lessons>div{padding-bottom:14px}
+.lesson{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:50px;padding:10px 12px;border-top:1px solid rgba(244,235,214,.07);font-size:.88rem;color:rgba(244,235,214,.4)}
+.lesson.free{color:var(--sand);cursor:pointer;border-radius:10px;transition:background .2s}
+.lesson.free:hover{background:rgba(47,224,168,.09)}
+.free-tag{margin-left:8px;padding:3px 8px;border-radius:6px;background:rgba(47,224,168,.15);color:var(--mint);font-size:.66rem;font-weight:800}
+.go{color:var(--mint);font-weight:700;font-size:.8rem;white-space:nowrap}.dur{font-size:.78rem;white-space:nowrap}
+/* instructor */
+.inst{display:grid;grid-template-columns:.85fr 1.15fr;overflow:hidden;border:1px solid var(--line);border-radius:26px;background:var(--bg2);transition:border-color .35s}
+.inst:hover{border-color:rgba(47,224,168,.38)}
+.inst-img{position:relative;min-height:440px;background:#102d27}
+.inst-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:grayscale(1);transition:filter .5s,transform .7s}
+.inst:hover .inst-img img{filter:grayscale(.2);transform:scale(1.04)}
+.inst-img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(4,25,20,.8),transparent 55%)}
+.badge{position:absolute;z-index:2;left:20px;bottom:20px;display:flex;align-items:center;gap:9px;padding:9px 15px;border-radius:99px;background:rgba(4,33,28,.85);border:1px solid var(--line);font-size:.78rem;font-weight:600}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+.inst-body{padding:46px 42px;display:flex;flex-direction:column;justify-content:center}
+.inst-body h3{font-size:clamp(2rem,4vw,2.6rem);margin:6px 0}.role{color:var(--mint);font-size:.85rem;font-weight:600;margin-bottom:18px}
+.inst-body p{color:#b5c1bc;font-size:.92rem;margin-bottom:12px}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.skills span{padding:8px 12px;border:1px solid rgba(47,224,168,.2);border-radius:8px;background:rgba(47,224,168,.08);color:#a9e9d1;font-size:.76rem;font-weight:600}
+.inst-foot{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.inst-foot strong{color:var(--mint);font-size:.88rem}
+.social{display:flex;gap:9px}.social a{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;font-size:.78rem;font-weight:700;transition:.25s}
+.social a:hover{background:var(--mint);color:#02251C;border-color:var(--mint)}
+/* youtube */
+.yt{max-width:940px;margin:0 auto;border:1px solid rgba(47,224,168,.2);border-radius:24px;overflow:hidden;background:#071A16;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.yt .frame{position:relative;aspect-ratio:16/9;background:#000}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-info{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px}
+.yt-info h3{font-size:1.3rem;margin-bottom:4px}.yt-info p{font-size:.86rem;color:var(--muted)}
+/* cta */
+.cta{padding:0 0 90px}
+.cta-box{position:relative;overflow:hidden;padding:60px 30px;text-align:center;border-radius:30px;background:linear-gradient(135deg,var(--mint),#7df0c8);color:#02251C}
+.cta-box::before{content:"JS";position:absolute;right:-10px;bottom:-60px;font:800 16rem/1 "Bricolage Grotesque";color:rgba(2,37,28,.07);letter-spacing:-.1em}
+.cta-box h2{position:relative;font-size:clamp(2rem,4vw,3.1rem);max-width:640px;margin:0 auto 12px}
+.cta-box p{position:relative;max-width:500px;margin:0 auto 24px;opacity:.8}
+.cta-box .btn{position:relative;background:#02251C;color:var(--sand)}
+/* footer */
+.foot{position:relative;overflow:hidden;padding:70px 0 0;border-top:1px solid var(--line);background:linear-gradient(#031b17,#021512)}
+.foot-main{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px;padding-bottom:50px}
+.foot-brand p{max-width:340px;margin:16px 0 18px;color:var(--muted);font-size:.9rem}
+.foot-col h4{margin-bottom:12px;font:700 .85rem Inter;color:var(--sand)}
+.foot-col a{display:block;max-width:200px;padding:8px 0;border-bottom:1px solid rgba(244,235,214,.07);color:var(--muted);font-size:.88rem;transition:.2s}
+.foot-col a:hover{color:var(--mint);padding-left:6px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.foot-social{display:flex;align-items:center;gap:10px}
+.foot-social a,.to-top{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:rgba(244,235,214,.04);cursor:pointer;transition:.25s}
+.foot-social a:hover,.to-top:hover{background:var(--mint);color:#02251C;border-color:var(--mint)}
+.foot-social svg{width:17px;height:17px;fill:currentColor}
+.mark{text-align:center;font:800 clamp(3rem,13vw,10rem)/.85 "Bricolage Grotesque";letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(244,235,214,.12);white-space:nowrap;overflow:hidden;user-select:none;-webkit-mask-image:linear-gradient(#000 25%,transparent 95%);mask-image:linear-gradient(#000 25%,transparent 95%)}
+/* whatsapp */
+.wa{position:fixed;right:20px;bottom:20px;z-index:1500;display:flex;align-items:center;gap:10px;height:56px;padding:0 22px 0 16px;border-radius:99px;background:#25D366;color:#04211C;font-weight:700;font-size:.9rem;box-shadow:0 12px 32px rgba(37,211,102,.35);transition:transform .25s}
+.wa:hover{transform:translateY(-3px)}.wa svg{width:28px;height:28px;fill:currentColor}
+/* mobile buy bar */
+.mbar{display:none}
+/* modal */
+.modal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.88);backdrop-filter:blur(12px)}
+.modal.active{display:flex}
+.modal-box{width:100%;max-width:860px;overflow:hidden;border:1px solid rgba(47,224,168,.25);border-radius:20px;background:var(--bg);box-shadow:0 25px 90px rgba(0,0,0,.5);animation:up .3s ease}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 22px}
+.modal-head small{color:var(--mint);font-weight:700;font-size:.72rem}.modal-head h3{font-size:1.15rem;margin-top:4px}
+.x{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:rgba(244,235,214,.06);font-size:1.5rem;cursor:pointer;transition:.25s}
+.x:hover{background:var(--mint);color:#02251C}
+.modal video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+@keyframes up{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){
+.hero-grid,.inst{grid-template-columns:1fr}.buy{position:static;max-width:560px}
+.burger{display:block;order:3}.nav-actions{margin-left:auto}.login{display:none}
+.links{display:none;position:fixed;top:64px;left:0;right:0;flex-direction:column;gap:0;margin:0;padding:12px 20px 22px;background:rgba(4,33,28,.98);border-bottom:1px solid var(--line)}
+.links.open{display:flex}.links a{padding:14px 0;border-bottom:1px solid var(--line)}
+.bento{grid-template-columns:repeat(2,1fr)}.cell,.cell.big{grid-column:span 1}
+.foot-main{grid-template-columns:1fr 1fr}.foot-brand{grid-column:1/-1}
+.inst-img{min-height:340px}}
+@media(max-width:600px){
+.wrap{width:calc(100% - 30px)}.hero{padding-top:110px}.section{padding:64px 0}
+.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}
+.bento{grid-template-columns:1fr}.cur-head{flex-direction:column;align-items:flex-start}.expand{width:100%;justify-content:center}
+.lessons>div{padding-left:12px}.m-head{padding:15px}.inst-body{padding:28px 20px}
+.yt-info{flex-direction:column;align-items:flex-start}.foot-bottom{flex-direction:column;align-items:flex-start}
+.wa{width:56px;padding:0;justify-content:center;bottom:84px}.wa span{display:none}
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:1400;display:flex;align-items:center;gap:14px;padding:12px 16px;background:rgba(4,33,28,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.mbar strong{font:800 1.5rem "Bricolage Grotesque";color:var(--mint)}.mbar .btn{flex:1;min-height:46px}
+.foot{padding-bottom:70px}.nav-actions .btn{padding:0 13px;font-size:.76rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<header id="header"><div class="wrap nav">
+ <a class="brand" href="HOME PAGE.HTML" aria-label="CaabiLearnHub Home"><img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+ <nav class="links" id="links" aria-label="Main navigation"><a href="HOME PAGE.HTML">Home</a><a class="active" href="Course.html">Courses</a><a href="About.html">About Us</a><a href="Contact.html">Contact</a></nav>
+ <div class="nav-actions"><a class="login" href="LOGIN.HTML">Login</a><a class="btn primary" href="SIGN UP.HTML">Get Started</a></div>
+ <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap hero-grid">
+ <div>
+  <div class="crumb"><a href="HOME PAGE.HTML">Home</a> / <a href="Course.html">Courses</a> / JavaScript</div>
+  <span class="tag"><i></i> Web Development</span>
+  <h1>JavaScript <em>Masterclass</em></h1>
+  <p class="lead">Baro JavaScript laga bilaabo aasaaska ilaa heer aad ku dhisi karto websites interactive ah. Faham ES6+, DOM, APIs iyo asynchronous programming adigoo tallaabo-tallaabo u baranaya.</p>
+  <div class="chips"><span><b data-hours></b> saacadood</span><span><b data-lessons></b> cashar</span><span><b>Beginner</b> friendly</span><span><b>Af-Soomaali</b></span></div>
+  <div class="actions"><a class="btn primary" href="SIGN UP.HTML">Enroll in Course</a><a class="btn outline" href="#curriculum">View curriculum</a></div>
+ </div>
+ <aside class="buy">
+  <div class="art"><div class="js-badge">JS</div><img id="pvThumb" alt="" style="display:none">
+   <button class="play-btn" type="button" id="pvBtn" aria-label="Daawo preview-ga koorsada"><span>▶</span><small>Daawo preview-ga koorsada</small></button></div>
+  <div class="buy-body">
+   <div class="price-row"><span class="price">$10</span><span class="old">$15</span><span class="save">Save 33%</span></div>
+   <div class="buy-actions"><a class="btn primary" href="./IIBSO COURSE.html">Buy Course</a><a class="btn outline" href="Contact.html">Contact us</a></div>
+   <ul class="includes"><li><span data-lessons></span>&nbsp;cashar</li><li><span data-hours></span>&nbsp;saacadood oo waxbarasho</li><li>Sharaxaad Af-Soomaali ah</li><li>Beginner friendly</li><li>Practical coding projects</li></ul>
+  </div>
+ </aside>
+</div></section>
+
+<div class="wrap"><div class="stats">
+ <div class="stat"><strong data-lessons></strong><span>Cashar oo dhammeystiran</span></div>
+ <div class="stat"><strong><span data-hours></span>h</strong><span>Waqtiga koorsada</span></div>
+ <div class="stat"><strong>$10</strong><span>Qiimaha koorsada</span></div>
+ <div class="stat"><strong>100%</strong><span>Af-Soomaali</span></div>
+</div></div>
+
+<section class="section"><div class="wrap">
+ <div class="head reveal"><h2>Maxaad ka heli doontaa?</h2><p>Koorso la dhisay si aad u gaarto natiijo dhab ah, ee ma aha oo kaliya aragti.</p></div>
+ <div class="bento reveal">
+  <div class="cell big"><div class="ic">⚡</div><h3>ES6+ casri ah</h3><p>Arrow functions, destructuring, modules iyo classes — qaabka JavaScript loo qoro maanta.</p></div>
+  <div class="cell big"><div class="ic">🧩</div><h3>DOM & Events</h3><p>Dhis bogag nool oo ka jawaaba riixitaannada, kiiboodhka iyo foomamka.</p></div>
+  <div class="cell"><div class="ic">🔄</div><h3>Async & Promises</h3><p>Fahan callbacks, promises iyo async/await si fudud.</p></div>
+  <div class="cell"><div class="ic">🌐</div><h3>APIs & Fetch</h3><p>Ka soo qaado xog server-ka oo ka shaqee JSON.</p></div>
+  <div class="cell"><div class="ic">🚀</div><h3>Projects dhab ah</h3><p>Todo, Weather, Quiz iyo Dashboard portfolio-gaaga u gaar ah.</p></div>
+ </div>
+</div></section>
+
+<section class="section" id="curriculum"><div class="wrap">
+ <div class="cur-head reveal">
+  <div><h2>Waxaad baran doontaa</h2><p class="meta" id="curMeta"></p></div>
+  <button class="expand" id="expandAll" type="button"><span id="exIcon">＋</span><span id="exText">Expand all</span></button>
+ </div>
+ <div class="modules" id="modules"></div>
+</div></section>
+
+<section class="section" id="instructor"><div class="wrap">
+ <div class="head reveal"><h2>Wax ka baro macallinka</h2><p>Barashada aqoon dhab ah waxay ka bilaabataa macallin khibrad leh.</p></div>
+ <div class="inst reveal">
+  <div class="inst-img"><img src="./Images/IMAGES FULL.png" alt="Suhayb Mohamed - Founder of CaabiLearnHub" loading="lazy"><span class="badge"><i></i>Founder & Instructor</span></div>
+  <div class="inst-body">
+   <span class="meta">Qofka ka danbeeya CaabiLearnHub</span>
+   <h3>Suhayb Mohamed</h3><div class="role">Founder & Instructor, CaabiLearnHub</div>
+   <p>Waxaan ahay Software Engineer xiiseeya Web Development iyo Artificial Intelligence. Waxaan aaminsanahay in qof walba uu awood u leeyahay inuu barto programming, haddii loo helo hab waxbarasho oo fudud oo la fahmi karo.</p>
+   <p>Ujeeddadaydu waa inaan ardayda Soomaaliyeed ku hago barashada programming iyo AI Af-Soomaali, anigoo ka caawinaya inay dhisaan projects dhab ah iyo xirfado ay mustaqbalkooda ku horumariyaan.</p>
+   <div class="skills"><span>Web Development</span><span>Artificial Intelligence</span><span>Software Engineering</span></div>
+   <div class="inst-foot"><strong>Learn. Build. Innovate.</strong><div class="social"><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a><a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GH</a></div></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+ <div class="head center reveal"><h2>Maxaad u baranaysaa JavaScript?</h2><p>JavaScript waa mid ka mid ah xirfadaha ugu muhiimsan Web Development-ka. Daawo video-gan si aad u fahamto fursadaha ay kuu furayso.</p></div>
+ <div class="yt reveal">
+  <div class="frame"><iframe src="https://www.youtube.com/embed/DEK-9Lxgqho" title="JavaScript Benefits - CaabiLearnHub" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  <div class="yt-info"><div><h3>Faa'iidooyinka JavaScript</h3><p>Baro sababta JavaScript muhiim ugu yahay Web Development.</p></div><a class="btn primary" href="https://youtu.be/DEK-9Lxgqho" target="_blank" rel="noopener noreferrer">Daawo YouTube ↗</a></div>
+ </div>
+</div></section>
+
+<section class="cta"><div class="wrap"><div class="cta-box reveal">
+ <h2>Diyaar ma u tahay inaad bilowdo?</h2><p>Ku biir ardayda baranaysa JavaScript Af-Soomaali, dhis projects dhab ah.</p>
+ <a class="btn" href="SIGN UP.HTML">Enroll in Course ↗</a>
+</div></div></section>
+</main>
+
+<footer class="foot">
+ <div class="wrap">
+  <div class="foot-main">
+   <div class="foot-brand">
+    <a class="brand" href="HOME PAGE.HTML"><img src="./CaabiLearnHub Modern Logo-Photoroom.png" alt="" onerror="this.style.display='none'"><span>Caabi<i>LearnHub</i></span></a>
+    <p>Goob waxbarasho oo diiradda saarta Programming iyo Artificial Intelligence, kuna baraysa Af-Soomaali.</p>
+    <strong style="font-size:.82rem">Learn • Build • <span style="color:var(--mint)">Grow</span></strong>
+   </div>
+   <nav class="foot-col" aria-label="Explore"><h4>Explore</h4><a href="HOME PAGE.HTML">Home</a><a href="Course.html">Courses</a><a href="About.html">About Us</a><a href="HOME PAGE.HTML#video-showcase">Platform Tour</a></nav>
+   <nav class="foot-col" aria-label="Learning"><h4>Learning</h4><a href="Course.html">All Courses</a><a href="Course.html">Programming</a><a href="Course.html">Artificial Intelligence</a></nav>
+   <nav class="foot-col" aria-label="Account"><h4>Account</h4><a href="LOGIN.HTML">Login</a><a href="SIGN UP.HTML">Create Account</a><a href="mailto:hello@caabilearnhub.com">Email Us</a></nav>
+  </div>
+  <div class="foot-bottom">
+   <p>© <span id="yr">2026</span> <strong>CaabiLearnHub.</strong> All rights reserved.</p>
+   <div class="foot-social">
+    <a href="https://www.youtube.com/@caabilearnhub" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8zM9.8 15.2V8.8l5.8 3.2-5.8 3.2z"/></svg></a>
+    <a href="https://x.com/SuhaibMohav8aw" target="_blank" rel="noopener noreferrer" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.2 2.3h3.3l-7.2 8.3 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.6l7.700-8.800L1.200 2.300H8l4.700 6.200 5.500-6.200zm-1.200 17.500h1.800L7.100 4.200H5.200L17 19.800z"/></svg></a>
+    <a href="https://wa.me/252907071342" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.900-1.500A10 10 0 1 0 12 2zm5.800 14.200c-.2.700-1.400 1.300-2 1.400-.5.100-1.200.100-1.900-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.100 1-2.400c.3-.3.600-.4.800-.4h.6c.2 0 .4 0 .6.500l.8 2c.1.200.1.400 0 .5l-.3.500-.4.400c-.1.200-.3.300-.1.600.2.300.7 1.200 1.500 1.900 1 .9 1.900 1.200 2.200 1.300.3.100.4.100.6-.1l.8-1c.2-.3.400-.2.600-.1l1.900.9c.3.100.5.200.5.300.1.200.1.800-.1 1.400z"/></svg></a>
+    <button class="to-top" id="toTop" type="button" aria-label="Ku laabo dhanka sare">↑</button>
+   </div>
+  </div>
+ </div>
+ <div class="mark" aria-hidden="true">CaabiLearnHub</div>
+</footer>
+
+
+<div class="mbar"><strong>$10</strong><a class="btn primary" href="./IIBSO COURSE.html">Buy Course</a></div>
+
+<div class="modal" id="modal" aria-hidden="true"><div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+ <div class="modal-head"><div><small>CAABILEARNHUB · FREE LESSON</small><h3 id="mTitle">JavaScript Lesson</h3></div><button class="x" id="mClose" type="button" aria-label="Close video">&times;</button></div>
+ <video id="mVideo" controls playsinline preload="metadata">Your browser does not support video playback.</video>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* ===== DATA: wax halkan ka beddel ===== */
+const HOURS="20.9";
+const FREE=[["Course Introduction","./Javascript.mp4"],["What is JavaScript?","./Javascript Course/1.mp4"],["How to Install Visual Studio Code?","./Vs.mp4"],["History of JavaScript","./Javascript Course/2.mp4"]];
+const MODULES=[
+["JavaScript Fundamentals","Beginner",[["Variables & Data Types","12:20"],["Operators & Expressions","10:15"],["Conditions & Loops","14:30"],["Functions","18:42"]],true],
+["ES6+ Modern JavaScript","Modern JS",[["let, const & scope","10:24"],["Arrow Functions","11:15"],["Template Literals","08:40"],["Destructuring","13:20"],["Spread & Rest Operators","14:05"],["Modules","16:30"],["Classes","18:10"]]],
+["Arrays, Objects & Functions","Intermediate",[["Working with Arrays","15:20"],["map(), filter() & reduce()","18:35"],["JavaScript Objects","16:10"],["Object Methods","13:45"],["Higher-Order Functions","17:30"],["Scope & Closures","19:20"],["Reusable JavaScript Patterns","15:55"]]],
+["DOM Manipulation","Frontend",[["What is the DOM?","11:30"],["Selecting Elements","13:20"],["Changing HTML & CSS","15:40"],["Creating Elements","14:50"],["DOM Events","17:20"],["Interactive Web Page Project","25:10"]]],
+["Events & Forms","Practical",[["Click & Mouse Events","12:20"],["Keyboard Events","11:35"],["Form Events","16:25"],["Form Validation","18:10"],["Build a Login Form","27:45"]]],
+["Async JavaScript","Advanced",[["Synchronous vs Asynchronous","13:30"],["Callbacks","15:25"],["Promises","19:40"],["Promise Methods","16:20"],["Async / Await","18:45"],["Error Handling","14:30"]]],
+["APIs & Fetch","Real Projects",[["What is an API?","10:40"],["Fetch API","15:30"],["GET & POST Requests","18:15"],["Working with JSON","13:25"],["API Project","35:20"]]],
+["Final JavaScript Projects","Portfolio",[["Project Planning","12:40"],["Todo App","30:20"],["Weather App","38:10"],["Quiz Application","35:45"],["JavaScript Dashboard","42:20"],["Final Project & Next Steps","25:30"]]]
+];
+const PREVIEW_URL="https://youtu.be/Db5SVpbdK0k";
+/* ===== counts (computed, so they never disagree) ===== */
+const total=MODULES.reduce((n,m)=>n+m[2].length+(m[3]?FREE.length:0),0);
+$$("[data-lessons]").forEach(e=>e.textContent=total);
+$$("[data-hours]").forEach(e=>e.textContent=HOURS);
+$("#curMeta").textContent=`${MODULES.length} Modules • ${total} Lessons • ${HOURS} saacadood`;
+/* ===== curriculum ===== */
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+$("#modules").innerHTML=MODULES.map((m,i)=>{
+ const free=m[3]?FREE.map(f=>`<div class="lesson free" data-video="${encodeURI(f[1])}" data-title="${esc(f[0])}" tabindex="0" role="button"><span>${esc(f[0])}<b class="free-tag">FREE</b></span><span class="go">▶ Preview</span></div>`).join(""):"";
+ const locked=m[2].map(l=>`<div class="lesson"><span>${esc(l[0])}</span><span class="dur">🔒 ${l[1]}</span></div>`).join("");
+ const n=m[2].length+(m[3]?FREE.length:0);
+ return `<div class="module${i===0?" open":""}"><button class="m-head" type="button" aria-expanded="${i===0}"><span class="m-num">${String(i+1).padStart(2,"0")}</span><span class="m-title"><strong>${esc(m[0])}</strong><small>${n} lessons · ${m[1]}</small></span><span class="m-arrow">+</span></button><div class="lessons"><div>${free+locked}</div></div></div>`}).join("");
+const mods=$$(".module");
+function sync(){const all=mods.every(m=>m.classList.contains("open"));$("#exText").textContent=all?"Collapse all":"Expand all";$("#exIcon").textContent=all?"−":"＋"}
+mods.forEach(m=>m.querySelector(".m-head").addEventListener("click",e=>{e.currentTarget.setAttribute("aria-expanded",m.classList.toggle("open"));sync()}));
+$("#expandAll").addEventListener("click",()=>{const all=mods.every(m=>m.classList.contains("open"));mods.forEach(m=>{m.classList.toggle("open",!all);m.querySelector(".m-head").setAttribute("aria-expanded",String(!all))});sync()});
+/* ===== video modal ===== */
+const modal=$("#modal"),vid=$("#mVideo");let opener=null;
+function openV(el){opener=el;$("#mTitle").textContent=el.dataset.title;vid.src=el.dataset.video;modal.classList.add("active");modal.setAttribute("aria-hidden","false");document.body.classList.add("lock");vid.play().catch(()=>{});$("#mClose").focus()}
+function closeV(){vid.pause();vid.removeAttribute("src");vid.load();modal.classList.remove("active");modal.setAttribute("aria-hidden","true");document.body.classList.remove("lock");opener&&opener.focus()}
+$$(".lesson.free").forEach(l=>{l.addEventListener("click",()=>openV(l));l.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openV(l)}})});
+$("#mClose").addEventListener("click",closeV);
+modal.addEventListener("click",e=>{if(e.target===modal)closeV()});
+addEventListener("keydown",e=>{if(e.key==="Escape"){if(modal.classList.contains("active"))closeV();else menu(false)}});
+/* ===== header, menu, progress ===== */
+const header=$("#header"),prog=$("#prog"),burger=$("#burger"),links=$("#links");
+function onScroll(){header.classList.toggle("scrolled",scrollY>20);const max=document.documentElement.scrollHeight-innerHeight;prog.style.transform=`scaleX(${max>0?scrollY/max:0})`}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+function menu(o){links.classList.toggle("open",o);burger.classList.toggle("x",o);document.body.classList.toggle("lock",o);burger.setAttribute("aria-expanded",String(o));burger.setAttribute("aria-label",o?"Close navigation menu":"Open navigation menu")}
+burger.addEventListener("click",()=>menu(!links.classList.contains("open")));
+$$(".links a").forEach(a=>a.addEventListener("click",()=>menu(false)));
+/* ===== reveal ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+$$(".reveal").forEach(el=>io.observe(el));
+/* ===== YouTube hero preview ===== */
+const ytId=(PREVIEW_URL.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/)||[])[1]||"";
+const th=$("#pvThumb");
+if(ytId){th.style.display="";th.onerror=()=>{th.onerror=()=>{th.style.display="none"};th.src=`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`};th.src=`https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`}
+$("#pvBtn").addEventListener("click",e=>{const b=e.currentTarget;if(!ytId)return;const f=document.createElement("iframe");f.title="Course preview";f.src=`https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.parentElement.appendChild(f);b.remove()});
+$("#yr").textContent=new Date().getFullYear();
+$("#toTop").addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+</script>
+</body>
+</html>
